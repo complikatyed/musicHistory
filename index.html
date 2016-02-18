@@ -1,0 +1,89 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Music History</title>
+  <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+  <section>
+    <nav>
+      <ul class="nav">
+        <li>View Music</li>
+        <li><a href="#">Add Music</a></li>
+        <li><a href="#">Profile</a></li>
+      </ul>
+    </nav>
+  </section>
+  <section class="sidebar">
+    <form action="" method="POST">
+      <label class="padded">Song length:</label>
+      <input type="range" name="length" min="0" max="10">
+      <label class="padded">Artist:</label>
+      <select name="artist">
+        <option value="----">Options</option>
+        <option value="artist1">Hugh Laurie</option>
+        <option value="artist2">Diana Krall</option>
+        <option value="artist3">Patty Griffin</option>
+      </select>
+      <label class="padded">Album:</label>
+      <select name="album">
+        <option value="----">Options</option>
+        <option value="artist1album1">Let Them Talk</option>
+        <option value="artist1album2">Didn't It Rain</option>
+        <option value="artist2album1">Live in Paris</option>
+        <option value="artist2album2">From This Moment On</option>
+        <option value="artist2album3">The Look of Love</option>
+        <option value="artist3album1">Kiss in Time</option>
+        <option value="artist3album1">Ghost</option>
+        <option value="artist3album1">Silver Bell</option>
+      </select>
+      <label class="padded">Genre:</label><br>
+      <input type="checkbox" id="cbox1" class="check1" value="rock"><label class="check">Rock</label>
+      <input type="checkbox" id="cbox2" class="check1" value="classical"><label class="check">Classical</label><br>
+      <input type="checkbox" id="cbox3" class="check1" value="pop"><label class="check">Pop</label>
+      <input type="checkbox" id="cbox4" class="check1" value="jazz"><label class="check">Jazz</label><br>
+      <input type="checkbox" id="cbox5" class="check1" value="blues"><label class="check">Blues</label>
+      <input type="checkbox" id="cbox6" class="check1" value="hiphop"><label class="check">Hip hop</label><br>
+
+      <button class="grey_button">Filter</button>
+    </form>
+  </section>
+  <section class="songchart">
+    <section>
+      <p class="title">Song Name</p>
+      <ul class="song">
+        <li>Artist name</li>
+        <li>Album name</li>
+        <li>Genre</li>
+      </ul>
+    </section>
+    <section>
+      <p class="title">Song Name</p>
+      <ul class="song">
+        <li>Artist name</li>
+        <li>Album name</li>
+        <li>Genre</li>
+      </ul>
+    </section>
+    <section>
+      <p class="title">Song Name</p>
+      <ul class="song">
+        <li>Artist name</li>
+        <li>Album name</li>
+        <li>Genre</li>
+      </ul>
+    </section>
+    <section>
+      <p class="title">Song Name</p>
+      <ul class="song">
+        <li>Artist name</li>
+        <li>Album name</li>
+        <li>Genre</li>
+      </ul>
+    </section>
+  </section>
+  <script type="text/javascript" src="songs.js"></script>
+</body>
+</html>
