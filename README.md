@@ -1,10 +1,19 @@
-# musicHistoryV2
-Second iteration of the Music History project
+# Music History Part 3
 
-# Music History Part 2
+## Create a new branch
+
+`git checkout -b version3`
 
 ## Requirements
 
-Use JavaScript arrays, loops, and innerHTML to show the music you love.
+Using your new CSS skills, you'll build even better looking music history pages.
 
-Students must use JavaScript to create a list of songs in the `index.html` file for their Music History project. Have them download the [`songs.js`](https://raw.githubusercontent.com/nashville-software-school/front-end-curriculum/9f5d7303f4c53102e8918f0ca06bebc84c91d266/resources/js-101.js) file, which contains an array of strings with song information.
+1. Use the Flexible Layout Box model to ensure that both the form section and the content section are the same height.
+1. The entire container for the even songs (plus its details) should have a background color of Sea Shell (SeaShell or \#FFF5EE)
+1. The entire container for the odd songs (plus its details) should have a background color of Mint Cream (MintCream or \#F5FFFA)
+1. The first song container should have bold text.
+1. Set the navigation bar's position so that it's always on the top of the page, even if you scroll down. To ensure this works, you can just add some div tags at the bottom of the page that add enough text that would force you to scroll the browser.
+
+## Merging
+
+Remember to merge the `version3` branch back into `master` when you're done.
