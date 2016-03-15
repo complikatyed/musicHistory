@@ -30,4 +30,4 @@ var displaySongs = function(myArray, myId) {
   songSpot.innerHTML = buildSongString(myArray);
 }
 
-displaySongs(songs, "songchart");
+displaySongs(songs, "list-view");
