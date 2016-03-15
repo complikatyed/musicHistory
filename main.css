@@ -46,15 +46,20 @@ li:last-of-type {
 
 }
 
-.grey_button {
+.grey_button,
+.grey_button2 {
   border-radius: 5px;
   background-color: lightgrey;
   margin: 0 auto;
   width: 75px;
   margin: 40px 0 0 23px;
-/*  position: relative;
-  left: 25%;*/
+
   text-align: center;
+}
+
+.grey_button2 {
+  position: relative;
+  left: 38%;
 }
 
 select {
@@ -112,4 +117,29 @@ li:first-of-type {
 
 li:last-of-type {
   border: none;
+}
+
+
+.addLabel,
+.addLabel2,
+.addLabel3 {
+  margin-left: 30%;
+  margin-right: 5px;
+  margin-bottom: 60px;
+}
+
+.addLabel2{
+  margin-right: 50px;
+}
+
+.addLabel3{
+  margin-right: 40px;
+}
+
+.addInput {
+  margin-bottom: 10px;
+}
+
+.addArea {
+  padding-top: 50px;
 }
