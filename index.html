@@ -10,9 +10,10 @@
   <section>
     <nav>
       <ul class="nav">
-        <li>View Music</li>
-        <li><a href="#">Add Music</a></li>
-        <li><a href="#">Profile</a></li>
+        <li><a href="#" id="link-home">Home</a></li>
+        <li><a href="#" id="link-list">View Music</a></li>
+        <li><a href="#" id="link-add">Add Music</a></li>
+
       </ul>
     </nav>
   </section>
@@ -50,9 +51,21 @@
       <button class="grey_button">Filter</button>
     </form>
   </section>
-  <section id="songchart" class="songchart">
 
+  <section id="home-view">
+    Home
+  </section>
+
+  <section id="list-view" class="songchart hidden">
+    List
+  </section>
+
+  <section id="add-view" class="hidden">
+    Add
   </section>
   <script type="text/javascript" src="songs.js"></script>
+  <script type="text/javascript" src="add.js"></script>
+  <script type="text/javascript" src="home.js"></script>
+  <script type="text/javascript" src="list.js"></script>
 </body>
 </html>
