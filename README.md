@@ -6,7 +6,7 @@ Central [milestone](https://github.com/nashville-software-school/front-end-miles
 
 Instructions and criteria for each phase of the project can be found here: [Requirements](https://github.com/complikatyed/musicHistory/blob/master/requirements.md)
 
-You might also enjoy reading my [Lessons Learned](https://github.com/complikatyed/musicHistory/blob/master/lessons.md) page.
+You might also enjoy my [Lessons Learned](https://github.com/complikatyed/musicHistory/blob/master/lessons.md) page.
 
 ## How to run it
 
