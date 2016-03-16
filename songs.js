@@ -4,9 +4,38 @@ songs[0] = ["Legs", "ZZTop", "Eliminator", "rock"];
 songs[1] = ["The Logical Song", "Supertramp", "Breakfast in America", "rock"];
 songs[2] = ["Another Brick in the Wall", "Pink Floyd", "The Wall", "rock"];
 songs[3] = ["Welcome to the Jungle","Guns & Roses", "Appetite for Destruction", "rock"];
-songs[4] = ["Ironic", "Alanis Morisette", "Jagged Little Pill", "rock"];
 
 
+var getSongs = function() {
+  var title = document.getElementById("songTitle").value;
+  var artist = document.getElementById("songArtist").value;
+  var album = document.getElementById("songAlbum").value;
+  var genre = document.getElementById("songGenre").value.toLowerCase();
+
+  var innerSong = [];
+
+// create a new song array (that will go in the songs array)
+  innerSong.push(title, artist, album, genre);
+
+// add new song array to the master songs array
+  songs.push(innerSong);
+  return songs;
+}
+
+var addBtn = document.getElementById("addBtn");
+// event listener listening for click on the add button
+  addBtn.addEventListener("click", function() {
+  getSongs();
+  clearInputs();
+  displaySongs(songs, "songchart");
+});
+
+var clearInputs = function() {
+  document.getElementById("songTitle").value = "";
+  document.getElementById("songArtist").value = "";
+  document.getElementById("songAlbum").value = "";
+  document.getElementById("songGenre").value = "";
+}
 
 var buildSongString = function(myArray) {
   mySongs = "";
@@ -20,7 +49,6 @@ var buildSongString = function(myArray) {
    mySongs += "</ul></section>";
   }
    return mySongs;
-
 }
 
 
@@ -30,4 +58,3 @@ var displaySongs = function(myArray, myId) {
   songSpot.innerHTML = buildSongString(myArray);
 }
 
-displaySongs(songs, "list-view");
