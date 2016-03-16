@@ -87,6 +87,7 @@ label.check {
   height: 350px;
   padding: 10px;
   border: 1px solid black;
+  overflow: auto;
 }
 
 
