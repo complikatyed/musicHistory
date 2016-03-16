@@ -10,3 +10,10 @@ listLink.addEventListener("click", function(event) {
 
   displaySongs(songs, "songchart");
 });
+
+
+var displaySongs = function(myArray, myId) {
+  songSpot = document.getElementById(myId);
+
+  songSpot.innerHTML = buildSongString(myArray);
+}
