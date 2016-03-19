@@ -1,0 +1,22 @@
+{
+  "songs": [
+    {
+      "title": "Didn't It Rain",
+      "artist": "Hugh Laurie and the Copper Bottom Band",
+      "album": "Didn't It Rain",
+      "genre": "blues"
+    },
+    {
+      "title": "Little God",
+      "artist": "Patty Griffin",
+      "album": "Silver Bell",
+      "genre": "rock"
+    },
+    {
+      "title": "So Much Mine",
+      "artist": "Jonatha Brooke and the Story",
+      "album": "Angel in the House",
+      "genre": "rock"
+    }
+  ]
+}

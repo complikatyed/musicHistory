@@ -1,7 +1,7 @@
 ## Instructions
 
 This project is designed to grow as students' skills develop, so each assignment builds on the previous code.  
-Frequent refactoring is a necessity as the requirements become more technically demanding.
+Frequent refactoring is necessary as the requirements become more technically demanding.
 
 ### Assignment Four
 
