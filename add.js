@@ -1,5 +1,7 @@
-var addLink = document.getElementById("link-add");
-var addView = document.getElementById("add-view");
+'use strict'
+
+let addLink = document.getElementById("link-add");
+let addView = document.getElementById("add-view");
 
 addLink.addEventListener("click", function() {
   listView.classList.add("hidden");
@@ -10,10 +12,10 @@ addLink.addEventListener("click", function() {
 });
 
 var getSongs = function() {
-  var title = document.getElementById("songTitle").value;
-  var artist = document.getElementById("songArtist").value;
-  var album = document.getElementById("songAlbum").value;
-  var genre = document.getElementById("songGenre").value.toLowerCase();
+  let title = document.getElementById("songTitle").value;
+  let artist = document.getElementById("songArtist").value;
+  let album = document.getElementById("songAlbum").value;
+  let genre = document.getElementById("songGenre").value.toLowerCase();
 
   var innerSong = [];
 
@@ -28,9 +30,10 @@ var getSongs = function() {
 var addBtn = document.getElementById("addBtn");
 // event listener listening for click on the add button
   addBtn.addEventListener("click", function() {
+  // this will need to be refactored eventually
   getSongs();
   clearInputs();
-  displaySongs(songs, "songchart");
+  showSongs(songs, "songchart");
 
   addView.classList.add("hidden");
   addView.classList.remove("visible");
@@ -47,27 +50,15 @@ var clearInputs = function() {
   document.getElementById("songGenre").value = "";
 }
 
-var buildSongString = function(myArray) {
-  mySongs = "";
-  for (var i = 0; i < myArray.length; i++) {
 
-   mySongs += "<section><p class='title'>" + myArray[i][0] + "</p>";
-   mySongs += "<ul class='song'>";
-   mySongs += "<li>" + myArray[i][1] + "</li>";   // Artist name
-   mySongs += "<li>" + myArray[i][2] + "</li>";   // Album name
-   mySongs += "<li>" + myArray[i][3] + "</li>";   // Song genre
-   mySongs += "</ul></section>";
-  }
-   return mySongs;
-}
+var buildSongsFromObject = function(myArray) {
+  let ourSongs = "";
 
-
-var buildSongsFromObject = function(song) {
-  ourSongs = "";
-  var title = song.title;
-  var artist = song.artist;
-  var album = song.album;
-  var genre = song.genre;
+  for (var i = 0; i < myArray.length; i++){
+  let title  = myArray[i].title,
+      artist = myArray[i].artist,
+      album  = myArray[i].album,
+      genre = myArray[i].genre;
 
    ourSongs += "<section><p class='title'>" + title + "</p>";
    ourSongs += "<ul class='song'>";
@@ -75,7 +66,6 @@ var buildSongsFromObject = function(song) {
    ourSongs += "<li>" + album + "</li>";
    ourSongs += "<li>" + genre + "</li>";
    ourSongs += "</ul></section>";
-
-  //return ourSongs;
-  console.log(ourSongs);
+  };
+  return ourSongs;
 }

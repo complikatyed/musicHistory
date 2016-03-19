@@ -1,9 +1,7 @@
 function executeThisCodeAfterFileIsLoaded () {
-  // A bit more about what `this` is here. What is the execution context?
-  console.log(this.responseText);
   var myText = JSON.parse(this.responseText);
-  console.log(myText);
-  // Show usage of JSON.parse() here to get a POJO
+
+  showSongs(myText.songs, "songchart");
 }
 
 function executeThisCodeIfXHRFails () {
@@ -24,3 +22,4 @@ myRequest.open("GET", "songs.json");
 
 // Tell the XHR object to start
 myRequest.send();
+
