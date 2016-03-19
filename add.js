@@ -51,21 +51,22 @@ var clearInputs = function() {
 }
 
 
-var buildSongsFromObject = function(myArray) {
+var buildSongsFromObject = function(songs) {
   let ourSongs = "";
 
-  for (var i = 0; i < myArray.length; i++){
-  let title  = myArray[i].title,
-      artist = myArray[i].artist,
-      album  = myArray[i].album,
-      genre = myArray[i].genre;
+  songs.forEach(function (song, index) {
+  let title  = song.title,
+      artist = song.artist,
+      album  = song.album,
+      genre =  song.genre;
 
-   ourSongs += "<section><p class='title'>" + title + "</p>";
+   ourSongs += "<section id='song--${index}'><p class='title'>" + title + "</p>";
    ourSongs += "<ul class='song'>";
    ourSongs += "<li>" + artist + "</li>";
    ourSongs += "<li>" + album + "</li>";
    ourSongs += "<li>" + genre + "</li>";
+   ourSongs += "<li> <button id='btn--${index}' class='del_button'>Delete</button>";
    ourSongs += "</ul></section>";
-  };
+  });
   return ourSongs;
 }
