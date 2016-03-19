@@ -60,3 +60,22 @@ var buildSongString = function(myArray) {
   }
    return mySongs;
 }
+
+
+var buildSongsFromObject = function(song) {
+  ourSongs = "";
+  var title = song.title;
+  var artist = song.artist;
+  var album = song.album;
+  var genre = song.genre;
+
+   ourSongs += "<section><p class='title'>" + title + "</p>";
+   ourSongs += "<ul class='song'>";
+   ourSongs += "<li>" + artist + "</li>";
+   ourSongs += "<li>" + album + "</li>";
+   ourSongs += "<li>" + genre + "</li>";
+   ourSongs += "</ul></section>";
+
+  //return ourSongs;
+  console.log(ourSongs);
+}
