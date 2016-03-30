@@ -1,0 +1,28 @@
+{
+  "moreSongs": [
+  {
+    "title":  "Where is the Lid?",
+    "artist": "Hugh Laurie, Stephen Fry",
+    "album":  "A Bit of Fry and Laurie",
+    "genre":  "comedy"
+  },
+  {
+    "title":  "Sooner or Later",
+    "artist": "Patty Griffin",
+    "album":  "Silver Bell",
+    "genre":  "rock"
+  },
+  {
+    "title":  "Antarctica",
+    "artist": "The Weepies",
+    "album":  "Hideaway",
+    "genre":  "folk rock"
+  },
+  {
+    "title":  "Supermassive Black Hole",
+    "artist": "Muse",
+    "album":  "Black Holes and Revelations",
+    "genre":  "alt rock"
+  }
+  ]
+};

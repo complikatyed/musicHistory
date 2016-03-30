@@ -7,20 +7,24 @@
   <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
+
   <section>
     <nav>
       <ul class="nav">
-        <li><a href="#" id="link-list">List Music</a></li>
-        <li><a href="#" id="link-add">Add Music</a></li>
-
+        <li><a href="#" id="link-listMusic">List Music</a></li>
+        <li><a href="#" id="link-addMusic">Add Music</a></li>
       </ul>
     </nav>
   </section>
-  <section id="list-view" class="visible">
+
+  <section id="view-listMusic" class="visible">
+
     <div class="sidebar">
+
       <form action="" method="POST">
         <label class="padded">Song length:</label>
         <input type="range" name="length" min="0" max="10">
+
         <label class="padded">Artist:</label>
         <select name="artist">
           <option value="----">Options</option>
@@ -28,6 +32,7 @@
           <option value="artist2">Diana Krall</option>
           <option value="artist3">Patty Griffin</option>
         </select>
+
         <label class="padded">Album:</label>
         <select name="album">
           <option value="----">Options</option>
@@ -40,35 +45,52 @@
           <option value="artist3album1">Ghost</option>
           <option value="artist3album1">Silver Bell</option>
         </select>
-        <label class="padded">Genre:</label><br>
-        <input type="checkbox" id="cbox1" class="check1" value="rock"><label class="check">Rock</label>
-        <input type="checkbox" id="cbox2" class="check1" value="classical"><label class="check">Classical</label><br>
-        <input type="checkbox" id="cbox3" class="check1" value="pop"><label class="check">Pop</label>
-        <input type="checkbox" id="cbox4" class="check1" value="jazz"><label class="check">Jazz</label><br>
-        <input type="checkbox" id="cbox5" class="check1" value="blues"><label class="check">Blues</label>
-        <input type="checkbox" id="cbox6" class="check1" value="hiphop"><label class="check">Hip hop</label><br>
 
+
+        <label class="padded">Genre:</label>
+        <input type="checkbox" id="cbox1" class="check1" value="rock">
+        <label class="check">Rock</label>
+        <input type="checkbox" id="cbox2" class="check1" value="classical">
+        <label class="check">Classical</label>
+        <br>
+        <input type="checkbox" id="cbox3" class="check1" value="pop">
+        <label class="check">Pop</label>
+        <input type="checkbox" id="cbox4" class="check1" value="jazz">
+        <label class="check">Jazz</label>
+        <br>
+        <input type="checkbox" id="cbox5" class="check1" value="blues">
+        <label class="check">Blues</label>
+        <input type="checkbox" id="cbox6" class="check1" value="hiphop">
+        <label class="check">Hip hop</label>
+        <br>
         <button class="grey_button">Filter</button>
       </form>
     </div>
     <div id="songchart" class="songchart">
       Welcome to my Music History Project.
-
     </div>
   </section>
 
-  <section id="add-view" class="hidden addArea">
-    <label for="songTitle" class="addLabel">Song name:</label><input type="text" id="songTitle" name="songname" class="addInput"><br>
-    <label for="songArtist" class="addLabel2">Artist:</label><input type="text" id="songArtist" name="songArtist" class="addInput"><br>
-    <label for="songAlbum" class="addLabel3">Album:</label><input type="text" id="songAlbum" name="songAlbum" class="addInput"><br>
-    <label for="songGenre" class="addLabel3">Genre:</label><input type="text" id="songGenre" name="songGenre" class="addInput"><br>
+  <section id="view-addMusic" class="hidden addArea">
+    <label for="songTitle" class="addLabel">Song name:</label>
+    <input type="text" id="songTitle" name="songname" class="addInput">
+    <br>
+    <label for="songArtist" class="addLabel2">Artist:</label>
+    <input type="text" id="songArtist" name="songArtist" class="addInput">
+    <br>
+    <label for="songAlbum" class="addLabel3">Album:</label>
+    <input type="text" id="songAlbum" name="songAlbum" class="addInput">
+    <br>
+    <label for="songGenre" class="addLabel3">Genre:</label>
+    <input type="text" id="songGenre" name="songGenre" class="addInput">
+    <br>
     <button id="addBtn" class="grey_button2">Add</button>
   </section>
 
-  <script type="text/javascript" src="songs.js"></script>
+  <script type="text/javascript" src="moreSongs.json"></script>
   <script type="text/javascript" src="songs.json"></script>
-  <script type="text/javascript" src="xhr.js"></script>
-  <script type="text/javascript" src="add.js"></script>
   <script type="text/javascript" src="list.js"></script>
+   <script type="text/javascript" src="add.js"></script>
+  <script type="text/javascript" src="xhr.js"></script>
 </body>
 </html>
