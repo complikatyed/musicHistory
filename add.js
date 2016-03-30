@@ -1,7 +1,11 @@
 'use strict'
 
-let addLink = document.getElementById("link-add");
-let addView = document.getElementById("add-view");
+let addLink = document.getElementById("link-addMusic");
+let addView = document.getElementById("view-addMusic");
+
+let songsArray = [];
+
+// -------------------- Event listeners for the 'List Music' and 'Add Music' buttons -------- //
 
 addLink.addEventListener("click", function() {
   listView.classList.add("hidden");
@@ -11,29 +15,47 @@ addLink.addEventListener("click", function() {
 
 });
 
+// -------------------- Capture values from user "add songs" input  ---------------------- //
+
 var getSongs = function() {
   let title = document.getElementById("songTitle").value;
   let artist = document.getElementById("songArtist").value;
   let album = document.getElementById("songAlbum").value;
   let genre = document.getElementById("songGenre").value.toLowerCase();
 
-  var innerSong = [];
+  var inputArray = [];
 
-// create a new song array (that will go in the songs array)
-  innerSong.push(title, artist, album, genre);
+  // ----- create a new song array (that will go in the songs array)
 
-// add new song array to the master songs array
-  songs.push(innerSong);
-  return songs;
+  inputArray.push(title, artist, album, genre);
+
+  // ----- add new song array to the master songs array
+
+  songsArray.push(inputArray);
+
+  // ----- this function is defined in list.js 
+  buildSongCardsFromObject(songsArray);
 }
 
+// -------------------- Clear 'Add Songs' input boxes ----------------------------- //
+
+var clearInputs = function() {
+
+  document.getElementById("songTitle").value = "";
+  document.getElementById("songArtist").value = "";
+  document.getElementById("songAlbum").value = "";
+  document.getElementById("songGenre").value = "";
+
+}
+
+// -------------------- Event listener for the "Add" button -------------------------- //
+
 var addBtn = document.getElementById("addBtn");
-// event listener listening for click on the add button
-  addBtn.addEventListener("click", function() {
-  // this will need to be refactored eventually
+
+addBtn.addEventListener("click", function() {
+
   getSongs();
   clearInputs();
-  showSongs(songs, "songchart");
 
   addView.classList.add("hidden");
   addView.classList.remove("visible");
@@ -43,30 +65,6 @@ var addBtn = document.getElementById("addBtn");
 
 });
 
-var clearInputs = function() {
-  document.getElementById("songTitle").value = "";
-  document.getElementById("songArtist").value = "";
-  document.getElementById("songAlbum").value = "";
-  document.getElementById("songGenre").value = "";
-}
 
 
-var buildSongsFromObject = function(songs) {
-  let ourSongs = "";
 
-  songs.forEach(function (song, index) {
-  let title  = song.title,
-      artist = song.artist,
-      album  = song.album,
-      genre =  song.genre;
-
-   ourSongs += "<section id='song--${index}'><p class='title'>" + title + "</p>";
-   ourSongs += "<ul class='song'>";
-   ourSongs += "<li>" + artist + "</li>";
-   ourSongs += "<li>" + album + "</li>";
-   ourSongs += "<li>" + genre + "</li>";
-   ourSongs += "<li> <button id='btn--${index}' class='del_button'>Delete</button>";
-   ourSongs += "</ul></section>";
-  });
-  return ourSongs;
-}
