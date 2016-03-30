@@ -68,6 +68,8 @@ var showSongs = function(myString, myId) {
 
   songSpot.innerHTML = myString;
 
+  addListenersToDeleteButtons();
+
 };
 
 
