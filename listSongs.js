@@ -46,6 +46,7 @@ listLink.addEventListener("click", function(event) {
 var buildSongCardsFromObject = function(myArray) {
 
   let mySongs = "";
+
     for (var i = 0; i < myArray.length; i++) {
 
      mySongs += "<section id='song--" + i + "'><p class='title'>" + myArray[i][0] + "</p>";
@@ -56,7 +57,7 @@ var buildSongCardsFromObject = function(myArray) {
      mySongs += "<li> <button id='btn--" + i + "' class='del_button'>Delete</button>";
      mySongs += "</ul></section>";
     }
-
+    mySongs += "<section><button id='showMore' class='grey_button_centered'>More</button></section>"
     showSongs(mySongs, "songchart");
 };
 
