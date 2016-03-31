@@ -1,6 +1,6 @@
 'use strict'
 
- // ------- Event listener and conditionals for delete messages --------------- //
+ // ------- Dynamically adds event listeners to all the delete buttons --------------- //
 
   var addListenersToDeleteButtons = function() {
 
@@ -25,7 +25,7 @@
      };
   };
 
-// ------- Event Delete the message selected --------------- //
+// ------- Function that deletes selected message from DOM and master songs array --------- //
 
   var deleteSong = function(event) {
 

@@ -1,5 +1,5 @@
 {
-  "moreSongs": [
+  "songs": [
   {
     "title":  "Where is the Lid?",
     "artist": "Hugh Laurie, Stephen Fry",
@@ -25,4 +25,4 @@
     "genre":  "alt rock"
   }
   ]
-};
+}
