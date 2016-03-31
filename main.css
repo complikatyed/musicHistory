@@ -47,7 +47,8 @@ li:last-of-type {
 }
 
 .grey_button,
-.grey_button2 {
+.grey_button2,
+.grey_button_centered {
   border-radius: 5px;
   background-color: lightgrey;
   margin: 0 auto;
@@ -60,6 +61,11 @@ li:last-of-type {
 .grey_button2 {
   position: relative;
   left: 38%;
+}
+
+.grey_button_centered {
+  position: relative;
+  left: 30%;
 }
 
 .del_button {
