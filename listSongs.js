@@ -3,6 +3,33 @@
 let listLink = document.getElementById("link-listMusic");
 let listView = document.getElementById("view-listMusic");
 
+// -------------------- XHR success and failure functions ------------------------------- //
+
+function onLoadSuccess(){
+  var myText = JSON.parse(this.responseText);
+  gatherStoredSongData(myText.songs);
+}
+
+function onLoadFailure(){
+  alert("Well, that didn't work.");
+}
+
+// -------------------- XHR request converted to a re-callable function ---------------- //
+
+
+function myGet(url) {
+  var myRequest = new XMLHttpRequest();
+
+  myRequest.open('GET', url, true);
+
+  myRequest.addEventListener("load", onLoadSuccess);
+
+  myRequest.addEventListener("error", onLoadFailure);
+
+  myRequest.send();
+}
+
+
 // -------------------- Event listeners for the "View List" button -------------------------- //
 
 listLink.addEventListener("click", function(event) {
@@ -13,9 +40,8 @@ listLink.addEventListener("click", function(event) {
   listView.classList.add("visible");
   listView.classList.remove("hidden");
 
-  // ---- XHR call for the first set of songs that are stored as JSON data ---- //
-  //myRequest.open("GET", "newSongs.json");
-
+  // ----- calls the XHR requesting function and tells it what file to grab from ----- //
+  myGet("songs.json");
 
 });
 
@@ -57,11 +83,15 @@ var buildSongCardsFromObject = function(myArray) {
      mySongs += "<li> <button id='btn--" + i + "' class='del_button'>Delete</button>";
      mySongs += "</ul></section>";
     }
+
+    // ----- Dynamically adds the 'More' button (so it will always be at the bottom) ----- //
     mySongs += "<section><button id='showMore' class='grey_button_centered'>More</button></section>"
+
+    // ----- Calls the 'showSongs' function that sends the song string to the DOM ------ //
     showSongs(mySongs, "songchart");
 };
 
-// -------------------- Event listener for the "Add" button -------------------------- //
+// -------------------- Function that adds songs to the DOM -------------------------- //
 
 var showSongs = function(myString, myId) {
 
@@ -69,12 +99,25 @@ var showSongs = function(myString, myId) {
 
   songSpot.innerHTML = myString;
 
+  // ----- Adds event listeners to the 'Delete'/'More' buttons after they're in the DOM ----- //
   addListenersToDeleteButtons();
+  addListenerToMoreButton();
 
 };
 
 
+// -------------------- Event listener for the "More" button -------------------------- //
 
+  var addListenerToMoreButton = function() {
+
+    let moreButton = document.getElementById("showMore");
+
+      moreButton.addEventListener("click", function(){
+
+        // ----- calls XHR request function and tells it to grab moreSongs.json ----- //
+        myGet("moreSongs.json");
+      });
+  };
 
 
 
