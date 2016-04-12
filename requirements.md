@@ -3,6 +3,13 @@
 This project is designed to grow as students' skills develop, so each assignment builds on the previous code.  
 Frequent refactoring is necessary as the requirements become more technically demanding.
 
+### Assignment Five
+
+This one's simple.  
+
+Implement jQuery in your Music History code. Every innerHTML, getElementById, getElementByClassName, event listener and XHR request. Convert 'em all.
+
+
 ### Assignment Four
 
 ##### Part One
