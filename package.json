@@ -1,0 +1,28 @@
+{
+  "name": "musicHistory",
+  "version": "1.0.0",
+  "description": "Ongoing front end project for NSS evening class",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/complikatyed/musicHistory.git"
+  },
+  "author": "Complikatyed",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/complikatyed/musicHistory/issues"
+  },
+  "homepage": "https://github.com/complikatyed/musicHistory",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.1",
+    "gulp-sass": "^2.3.1",
+    "gulp-watch": "^4.3.5",
+    "jshint": "^2.9.2",
+    "jshint-stylish": "^2.2.0",
+    "lodash": "^4.12.0"
+  }
+}

@@ -1,3 +1,10 @@
+@import 'add-music';
+@import 'songchart';
+
+$nav-color: #FFB4B0;
+$sidebar-color: #4DD7FA;
+$button-color: lightgrey;
+
 body {
   font-family: "Arial";
 }
@@ -12,7 +19,7 @@ body {
 
 .nav {
   border: 1px solid black;
-  background-color: #FFB4B0;
+  background-color: $nav-color;
   width: 680px;
   height: 30px;
   margin: 0 50px 12px 50px;
@@ -24,7 +31,7 @@ body {
     list-style-type: none;
     margin: 5px 10px 0 0;
     font-size: 14px;
-    background-color: #FFB4B0;
+    background-color: $nav-color;
     border-right: 2px solid black;
     padding-right: 8px;
 }
@@ -36,7 +43,7 @@ li:last-of-type {
 
 .sidebar {
   float: left;
-  background-color: #4DD7FA;
+  background-color: $sidebar-color;
   margin: 0 12px 0 50px;
   height: 350px;
   width: 145px;
@@ -46,34 +53,38 @@ li:last-of-type {
 
 }
 
-.grey_button,
-.grey_button2,
-.grey_button_centered {
+
+%button {
   border-radius: 5px;
   background-color: lightgrey;
   margin: 0 auto;
   width: 75px;
   margin: 40px 0 0 23px;
-
   text-align: center;
 }
 
+.grey_button {
+  extend: %button;
+}
+
 .grey_button2 {
+  extend: %button;
   position: relative;
   left: 38%;
 }
 
 .grey_button_centered {
+  extend: %button;
+  margin-top: 25px;
   position: relative;
   left: 30%;
 }
 
 .del_button {
   border-radius: 5px;
-  background-color: lightgrey;
+  background-color: $button-color;
   float: right;
   width: 45px;
-
   text-align: center;
 }
 
@@ -94,68 +105,4 @@ label.check {
 }
 
 
-.songchart {
-  float: left;
-  background-color: #FEFAC0;
-  margin-right: 50px;
-  width: 500px;
-  height: 350px;
-  padding: 10px;
-  border: 1px solid black;
-  overflow: auto;
-}
 
-
-.title {
-  color: #785616;
-  font-size: 1.5em;
-  margin-bottom: 0;
-  padding-left: 10px;
-  clear: left;
-}
-
-.song {
-  padding-left: 10px;
-  margin: 10px 5px 50px 0;
-}
-
-.song > li{
-  list-style: none;
-  float: left;
-  border-right: 1px solid black;
-  padding: 0 10px 5px 10px;
-  font-size: 14px;
-}
-
-li:first-of-type {
-  padding-left: 0;
-}
-
-li:last-of-type {
-  border: none;
-}
-
-
-.addLabel,
-.addLabel2,
-.addLabel3 {
-  margin-left: 30%;
-  margin-right: 5px;
-  margin-bottom: 60px;
-}
-
-.addLabel2{
-  margin-right: 50px;
-}
-
-.addLabel3{
-  margin-right: 40px;
-}
-
-.addInput {
-  margin-bottom: 10px;
-}
-
-.addArea {
-  padding-top: 50px;
-}

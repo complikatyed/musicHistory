@@ -1,0 +1,27 @@
+%label {
+  margin-left: 30%;
+  margin-right: 5px;
+  margin-bottom: 60px;
+}
+
+.addLabel {
+  extend: %label;
+}
+
+.addLabel2{
+  extend: %label;
+  margin-right: 50px;
+}
+
+.addLabel3{
+  extend: %label;
+  margin-right: 40px;
+}
+
+.addInput {
+  margin-bottom: 10px;
+}
+
+.addArea {
+  padding-top: 50px;
+}

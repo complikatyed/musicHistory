@@ -1,0 +1,43 @@
+$songchart-color: #FEFAC0;
+$title-color: #785616;
+
+.songchart {
+  float: left;
+  background-color: $songchart-color;
+  margin-right: 50px;
+  width: 500px;
+  height: 350px;
+  padding: 10px;
+  border: 1px solid black;
+  overflow: auto;
+}
+
+
+.title {
+  color: $title-color;
+  font-size: 1.5em;
+  margin-bottom: 0;
+  padding-left: 10px;
+  clear: left;
+}
+
+.song {
+  padding-left: 10px;
+  margin: 10px 5px 50px 0;
+}
+
+.song > li{
+  list-style: none;
+  float: left;
+  border-right: 1px solid black;
+  padding: 0 10px 5px 10px;
+  font-size: 14px;
+}
+
+li:first-of-type {
+  padding-left: 0;
+}
+
+li:last-of-type {
+  border: none;
+}
