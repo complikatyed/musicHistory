@@ -1,19 +1,24 @@
-.addLabel {
-  extend: % label; }
+.addLabel, .addLabel2, .addLabel3 {
+  margin-left: 30%;
+  margin-right: 5px;
+  margin-bottom: 60px; }
 
 .addLabel2 {
-  extend: % label;
   margin-right: 50px; }
 
 .addLabel3 {
-  extend: % label;
   margin-right: 40px; }
 
 .addInput {
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  width: 120px; }
+
+.setwidth {
+  width: 250px; }
 
 .addArea {
-  padding-top: 50px; }
+  padding-top: 50px;
+  width: 680px; }
 
 .songchart {
   float: left;
@@ -88,19 +93,27 @@ li:last-of-type {
   border: 1px solid black;
   font-size: 14px; }
 
-.grey_button {
-  extend: % button; }
+.grey_button, .grey_button2, .grey_button_centered, .grey_button_centered1 {
+  border-radius: 5px;
+  background-color: lightgrey;
+  margin: 0 auto;
+  width: 75px;
+  margin: 40px 0 0 0;
+  text-align: center; }
 
 .grey_button2 {
-  extend: % button;
   position: relative;
-  left: 38%; }
+  left: 50%; }
 
 .grey_button_centered {
-  extend: % button;
   margin-top: 25px;
   position: relative;
-  left: 30%; }
+  left: 20%; }
+
+.grey_button_centered1 {
+  margin-top: 25px;
+  position: relative;
+  left: 35%; }
 
 .del_button {
   border-radius: 5px;
