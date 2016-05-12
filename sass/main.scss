@@ -1,4 +1,4 @@
-@import 'add-music';
+@import 'addmusic';
 @import 'songchart';
 
 $nav-color: #FFB4B0;
@@ -59,26 +59,34 @@ li:last-of-type {
   background-color: lightgrey;
   margin: 0 auto;
   width: 75px;
-  margin: 40px 0 0 23px;
+  margin: 40px 0 0 0;
   text-align: center;
 }
 
 .grey_button {
-  extend: %button;
+  @extend %button;
 }
 
 .grey_button2 {
-  extend: %button;
+  @extend %button;
   position: relative;
-  left: 38%;
+  left: 50%;
 }
 
 .grey_button_centered {
-  extend: %button;
+  @extend %button;
   margin-top: 25px;
   position: relative;
-  left: 30%;
+  left: 20%;
 }
+
+.grey_button_centered1 {
+  @extend %button;
+  margin-top: 25px;
+  position: relative;
+  left: 35%;
+}
+
 
 .del_button {
   border-radius: 5px;

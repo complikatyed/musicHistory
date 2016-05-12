@@ -143,7 +143,7 @@ $(document).ready(function(){
       }
 
       // ----- Dynamically adds the 'More' button (so it will always be at the bottom) ----- //
-      mySongs += "<section><button id='showMore' class='grey_button_centered'>More</button></section>"
+      mySongs += "<section><button id='showMore' class='grey_button_centered1'>More</button></section>"
 
       // ----- Calls the 'showSongs' function that sends the song string to the DOM ------ //
       showSongs(mySongs, "#songchart");
