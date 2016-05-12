@@ -1,27 +1,33 @@
-%label {
+%namer {
   margin-left: 30%;
   margin-right: 5px;
   margin-bottom: 60px;
 }
 
 .addLabel {
-  extend: %label;
+  @extend %namer;
 }
 
 .addLabel2{
-  extend: %label;
+  @extend %namer;
   margin-right: 50px;
 }
 
 .addLabel3{
-  extend: %label;
+  @extend %namer;
   margin-right: 40px;
 }
 
 .addInput {
   margin-bottom: 10px;
+  width: 120px;
+}
+
+.setwidth {
+  width: 250px;
 }
 
 .addArea {
   padding-top: 50px;
+  width: 680px;
 }
