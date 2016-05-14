@@ -27,7 +27,7 @@ $(document).ready(function(){
     $("#view-listMusic").removeClass("hidden");
 
     $.ajax({
-      url:"songs.json",
+      url:"https://kmrmusichistory.firebaseio.com/songs/.json",
       success: onLoadSuccess
     });
 
@@ -38,7 +38,16 @@ $(document).ready(function(){
 
   $("#addBtn").click(function() {
 
-    getSongs();
+    let newSong = getSongs();
+
+    $.ajax({
+        url:"https://kmrmusichistory.firebaseio.com/songs/.json",
+        type: "POST",
+        data: JSON.stringify(newSong)
+      }).done(function() {
+        console.log("It worked!");
+      })
+
     clearInputs();
 
     $('#view-addMusic').addClass("hidden");
@@ -64,22 +73,26 @@ $(document).ready(function(){
   // ---------- Capture values from user "add songs" input  ---------------------- //
 
   var getSongs = function() {
-    let title = $("#songTitle").val();
-    let artist = $("#songArtist").val();
-    let album = $("#songAlbum").val();
-    let genre = $("#songGenre").val().toLowerCase();
 
-    var inputArray = [];
+    var newSong = {
+    "title": $("#songTitle").val(),
+    "artist": $("#songArtist").val(),
+    "album": $("#songAlbum").val(),
+    "genre": $("#songGenre").val().toLowerCase()
+    };
+    //var inputArray = [];
 
     // ----- create a new song array (that will go in the songs array)
 
-    inputArray.push(title, artist, album, genre);
+    //inputArray.push(title, artist, album, genre);
 
     // ----- add new song array to the master songs array
 
-    songsArray.push(inputArray);
+    //songsArray.push(inputArray);
 
-    buildSongCardsFromObject();
+    //buildSongCardsFromObject();
+
+    return newSong;
   };
 
   // -------------------- Clear 'Add Songs' input boxes ----------------------------- //
@@ -96,7 +109,7 @@ $(document).ready(function(){
   // -------------------- XHR success and failure functions ------------------------------- //
 
   function onLoadSuccess(data){
-    gatherStoredSongData(data.songs);
+    gatherStoredSongData(data);
   }
 
   function onLoadFailure(){
@@ -106,17 +119,18 @@ $(document).ready(function(){
 
 // --------------------  Converts the JSON data from objects to arrays  -------------- //
 
-  var gatherStoredSongData = function(storedArray) {
+  var gatherStoredSongData = function(songs) {
 
-    for (var i = 0; i < storedArray.length; i++) {
+    for (let song in songs) {
 
       let storedSong = [];
 
       // ----- Pushes each piece of the song data into a new 'storedSong' array ----- //
-      storedSong.push(storedArray[i].title);
-      storedSong.push(storedArray[i].artist);
-      storedSong.push(storedArray[i].album);
-      storedSong.push(storedArray[i].genre);
+
+      storedSong.push(songs[song].title);
+      storedSong.push(songs[song].artist);
+      storedSong.push(songs[song].album);
+      storedSong.push(songs[song].genre);
 
       // ----- Pushes each the new individual song array into the master song array ------ //
       songsArray.push(storedSong);
