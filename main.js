@@ -2,7 +2,9 @@
 
 $(document).ready(function(){
 
-  let songsArray = [];
+ let songsArray = [];
+
+ getDataFromFirebase();
 
 
   // -------------------- Event listeners for the 'Add Music' button ------------------ //
@@ -26,10 +28,7 @@ $(document).ready(function(){
     $("#view-listMusic").addClass("visible");
     $("#view-listMusic").removeClass("hidden");
 
-    $.ajax({
-      url:"songs.json",
-      success: onLoadSuccess
-    });
+    getDataFromFirebase();
 
   });
 
@@ -38,51 +37,38 @@ $(document).ready(function(){
 
   $("#addBtn").click(function() {
 
-    getSongs();
+    let newSong = getSongs();
+
+    sendNewDataToFirebase(newSong);
+
     clearInputs();
 
     $('#view-addMusic').addClass("hidden");
     $('#view-addMusic').removeClass("visible");
+
+    getDataFromFirebase();
 
     $("#view-listMusic").addClass("visible");
     $("#view-listMusic").removeClass("hidden");
 
   });
 
-// ------------ Event listener for the "More" button ----------------------------- //
-
-  var addListenerToMoreButton = function() {
-
-    $("#showMore").click(function() {
-      $.ajax({
-        url:"moreSongs.json",
-        success: onLoadSuccess
-      })
-    });
-  };
 
   // ---------- Capture values from user "add songs" input  ---------------------- //
 
   var getSongs = function() {
-    let title = $("#songTitle").val();
-    let artist = $("#songArtist").val();
-    let album = $("#songAlbum").val();
-    let genre = $("#songGenre").val().toLowerCase();
 
-    var inputArray = [];
+    var newSong = {
+    "title": $("#songTitle").val(),
+    "artist": $("#songArtist").val(),
+    "album": $("#songAlbum").val(),
+    "genre": $("#songGenre").val().toLowerCase()
+    };
 
-    // ----- create a new song array (that will go in the songs array)
-
-    inputArray.push(title, artist, album, genre);
-
-    // ----- add new song array to the master songs array
-
-    songsArray.push(inputArray);
-
-    buildSongCardsFromObject();
+    return newSong;
   };
 
-  // -------------------- Clear 'Add Songs' input boxes ----------------------------- //
+  // ---------- Clear 'Add Songs' input boxes ---------- //
 
   var clearInputs = function() {
 
@@ -93,10 +79,28 @@ $(document).ready(function(){
 
   };
 
+  // ---------- Clear songsArray (to avoid data repeat in DOM) ---------- //
+
+  function clearArray() {
+    songsArray = [];
+  };
+
+
+  // ---------- Get song data from Firebase storage ---------- //
+  function getDataFromFirebase() {
+
+    clearArray();
+
+    $.ajax({
+      url:"https://kmrmusichistory.firebaseio.com/songs/.json",
+      success: onLoadSuccess
+    });
+  }
+
   // -------------------- XHR success and failure functions ------------------------------- //
 
   function onLoadSuccess(data){
-    gatherStoredSongData(data.songs);
+    gatherStoredSongData(data);
   }
 
   function onLoadFailure(){
@@ -106,17 +110,19 @@ $(document).ready(function(){
 
 // --------------------  Converts the JSON data from objects to arrays  -------------- //
 
-  var gatherStoredSongData = function(storedArray) {
+  var gatherStoredSongData = function(songs) {
 
-    for (var i = 0; i < storedArray.length; i++) {
+    for (let song in songs) {
 
       let storedSong = [];
 
       // ----- Pushes each piece of the song data into a new 'storedSong' array ----- //
-      storedSong.push(storedArray[i].title);
-      storedSong.push(storedArray[i].artist);
-      storedSong.push(storedArray[i].album);
-      storedSong.push(storedArray[i].genre);
+
+      storedSong.push(songs[song].title);
+      storedSong.push(songs[song].artist);
+      storedSong.push(songs[song].album);
+      storedSong.push(songs[song].genre);
+      storedSong.push(song);
 
       // ----- Pushes each the new individual song array into the master song array ------ //
       songsArray.push(storedSong);
@@ -133,7 +139,7 @@ $(document).ready(function(){
 
       for (var i = 0; i < songsArray.length; i++) {
 
-       mySongs += "<section id='song--" + i + "'><p class='title'>" + songsArray[i][0] + "</p>";
+       mySongs += "<section id='song--" + songsArray[i][4] + "'><p class='title'>" + songsArray[i][0] + "</p>";
        mySongs += "<ul class='song'>";
        mySongs += "<li>" + songsArray[i][1] + "</li>";   // Artist name
        mySongs += "<li>" + songsArray[i][2] + "</li>";   // Album name
@@ -141,9 +147,6 @@ $(document).ready(function(){
        mySongs += "<li> <button id='btn--" + i + "' class='del_button'>Delete</button>";
        mySongs += "</ul></section>";
       }
-
-      // ----- Dynamically adds the 'More' button (so it will always be at the bottom) ----- //
-      mySongs += "<section><button id='showMore' class='grey_button_centered1'>More</button></section>"
 
       // ----- Calls the 'showSongs' function that sends the song string to the DOM ------ //
       showSongs(mySongs, "#songchart");
@@ -157,14 +160,12 @@ $(document).ready(function(){
 
     // ----- Adds event listeners to the 'Delete'/'More' buttons after they're in the DOM ----- //
     addListenersToDeleteButtons();
-    addListenerToMoreButton();
 
   };
 
   // ------- Dynamically adds event listeners to all the delete buttons --------------- //
 
   var addListenersToDeleteButtons = function() {
-
 
     let deleteButtonListener = document.getElementsByClassName("del_button");
 
@@ -188,6 +189,31 @@ $(document).ready(function(){
 
     songsArray.splice(songId, 1);
 
+    removeDataFromFirebase(songId);
+
   };
+
+
+// ----------- Remove selected song from Firebase storage ----------- //
+
+  function removeDataFromFirebase(songId) {
+
+    $.ajax({
+        url:"https://kmrmusichistory.firebaseio.com/songs/" + songId + ".json",
+        type: "DELETE"
+      });
+
+  };
+
+// ----------- Send user-added song data to Firebase storage ---------- //
+
+  function sendNewDataToFirebase(newSong) {
+    $.ajax({
+        url:"https://kmrmusichistory.firebaseio.com/songs/.json",
+        type: "POST",
+        data: JSON.stringify(newSong)
+      }).done(function() {});
+  };
+
 
 });
