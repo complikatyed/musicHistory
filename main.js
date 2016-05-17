@@ -59,8 +59,6 @@ $(document).ready(function(){
 
     let editedSong = getEditedSongData(editId);
 
-    console.log("in editBtnClickFunction:", editId);
-
     sendEditedSongToFirebase(editedSong, editId);
 
     $('#view-addMusic').addClass("hidden");
@@ -117,7 +115,6 @@ $(document).ready(function(){
     $('#editBtn').addClass("visible");
     $('#editBtn').removeClass("hidden");
 
-    console.log("in fillEditPlaceholders:", songId);
     editId = songId;
   };
 
@@ -257,8 +254,6 @@ $(document).ready(function(){
 
     let songId = thisSong.getAttribute('id').split("--")[1];
 
-    console.log("in editSong:", songId);
-
     getEditDataFromFirebase(songId);
 
   };
@@ -273,14 +268,10 @@ $(document).ready(function(){
         type: "GET"
       }).done(function(data) {
 
-        console.log("in getEditDataFromFirebase:", songId);
-
         fillEditPlaceholders(data, songId);
 
       });
-
   };
-
 
 
 // ----------- Remove selected song from Firebase storage ----------- //
@@ -333,7 +324,6 @@ $(document).ready(function(){
     "album": editedAlbum,
     "genre": editedGenre.toLowerCase()
     };
-    console.log("in getEditedSongData:", editId);
 
     return editedSongData;
   };
@@ -342,13 +332,17 @@ $(document).ready(function(){
 
   function sendEditedSongToFirebase(editedSong, editId) {
 
-    console.log("in sendEditedSongToFirebase:", editId );
-
     $.ajax({
         url:"https://kmrmusichistory.firebaseio.com/songs/" + editId + ".json",
         type: "PUT",
         data: JSON.stringify(editedSong)
-      }).done(function() {});
+      }).done(function() {
+
+        getAllSongDataFromFirebase();
+
+       $("#view-listMusic").addClass("visible");
+       $("#view-listMusic").removeClass("hidden");
+      });
 
   };
 
