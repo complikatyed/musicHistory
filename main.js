@@ -187,42 +187,17 @@ $(document).ready(function(){
 
     $(myId).html(myString);
 
-    // ----- Adds event listeners to the 'Delete'/'More' buttons after they're in the DOM ----- //
-    addListenersToDeleteButtons();
-    addListenersToEditButtons();
+    $('.del_button').on('click', function() {
+       deleteSong(event);
+    });
+
+    $('.edit_button').on('click', function() {
+      editSong(event);
+    });
 
   };
 
-  // ------- Dynamically adds event listeners to all the delete buttons --------------- //
-
-  var addListenersToDeleteButtons = function() {
-
-    let deleteButtonListener = document.getElementsByClassName("del_button");
-
-    for (let i = 0; i < deleteButtonListener.length; i++) {
-
-      let deleteButton = deleteButtonListener[i];
-
-       deleteButton.addEventListener("click", deleteSong);
-     };
-  };
-
-  // ------- Dynamically add event listeners to all the edit buttons --------------- //
-
-  var addListenersToEditButtons = function() {
-
-    let editButtonListener = document.getElementsByClassName("edit_button");
-
-    for (let i = 0; i < editButtonListener.length; i++) {
-
-      let editButton = editButtonListener[i];
-
-       editButton.addEventListener("click", editSong);
-     };
-  };
-
-
-// ------- Function that deletes selected message from DOM and master songs array --------- //
+// ------- Deletes selected message from DOM and master songs array --------- //
 
   var deleteSong = function(event) {
 
@@ -262,7 +237,6 @@ $(document).ready(function(){
       });
   };
 
-
 // ----------- Remove selected song from Firebase storage ----------- //
 
   function removeDataFromFirebase(songId) {
@@ -271,7 +245,6 @@ $(document).ready(function(){
         url:"https://kmrmusichistory.firebaseio.com/songs/" + songId + ".json",
         type: "DELETE"
       });
-
   };
 
   // ---------- Capture values from user "add songs" input  ---------------------- //
@@ -328,14 +301,10 @@ $(document).ready(function(){
       }).done(function() {
 
         getAllSongDataFromFirebase();
-
         showSongList();
-       //$("#view-listMusic").addClass("visible");
-       //$("#view-listMusic").removeClass("hidden");
+
       });
-
   };
-
 
 // ----------- Send user-added song data to Firebase storage ---------- //
 
@@ -346,6 +315,5 @@ $(document).ready(function(){
         data: JSON.stringify(newSong)
       }).done(function() {});
   };
-
-
+  
 });
