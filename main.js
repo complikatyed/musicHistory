@@ -3,6 +3,19 @@
  let songsArray = [];
  let editId = "";
 
+function showAddEditForm() {
+  $("#view-listMusic").addClass("hidden");
+  $('#view-addMusic').addClass("visible");
+  $('#view-addMusic').removeClass("hidden");
+}
+
+function showSongList() {
+  $('#view-addMusic').addClass("hidden");
+  $("#view-listMusic").addClass("visible");
+  $("#view-listMusic").removeClass("hidden");
+}
+
+
 $(document).ready(function(){
 
  getAllSongDataFromFirebase();
@@ -11,10 +24,13 @@ $(document).ready(function(){
   // -------------------- Event listeners for the 'Add Music' button ------------------ //
 
   $("#link-addMusic").click(function() {
-    $("#view-listMusic").addClass("hidden");
 
-    $('#view-addMusic').addClass("visible");
-    $('#view-addMusic').removeClass("hidden");
+    clearInputs();
+    showAddEditForm();
+    $('#addBtn').addClass("visible");
+    $('#addBtn').removeClass("hidden");
+    $('#editBtn').addClass("hidden");
+    $('#editBtn').removeClass("visible");
 
   });
 
@@ -23,12 +39,7 @@ $(document).ready(function(){
   $("#link-listMusic").click(function(event) {
 
     event.preventDefault();
-
-    $('#view-addMusic').addClass("hidden");
-
-    $("#view-listMusic").addClass("visible");
-    $("#view-listMusic").removeClass("hidden");
-
+    showSongList();
     getAllSongDataFromFirebase();
 
   });
@@ -41,19 +52,12 @@ $(document).ready(function(){
     let newSong = getNewSongData();
 
     sendNewDataToFirebase(newSong);
-
-    clearInputs();
-
-    $('#view-addMusic').addClass("hidden");
-    $('#view-addMusic').removeClass("visible");
-
     getAllSongDataFromFirebase();
-
-    $("#view-listMusic").addClass("visible");
-    $("#view-listMusic").removeClass("hidden");
+    showSongList();
 
   });
-  // -------------------- Event listener for the "Add" button ------------------ //
+
+  // ---------- Event listener for the "Edit" button ---------- //
 
   $("#editBtn").click(function() {
 
@@ -61,12 +65,7 @@ $(document).ready(function(){
 
     sendEditedSongToFirebase(editedSong, editId);
 
-    $('#view-addMusic').addClass("hidden");
-    $('#view-addMusic').removeClass("visible");
-
-    $("#view-listMusic").addClass("visible");
-    $("#view-listMusic").removeClass("hidden");
-
+    showSongList();
 
   });
 
@@ -89,16 +88,18 @@ $(document).ready(function(){
 
   var clearInputs = function() {
 
-    $("#songTitle").value = "";
-    $("#songArtist").value = "";
-    $("#songAlbum").value = "";
-    $("#songGenre").value = "";
+    $("#songTitle").attr("placeholder", "").val("");
+    $("#songArtist").attr("placeholder", "").val("");
+    $("#songAlbum").attr("placeholder", "").val("");
+    $("#songGenre").attr("placeholder", "").val("");
 
   };
 
   // ----- Fill 'Edit Songs' w placeholder data of existing song  ---------- //
 
   var fillEditPlaceholders = function(data, songId) {
+
+    clearInputs();
 
     $("#view-listMusic").addClass("hidden");
 
@@ -107,8 +108,7 @@ $(document).ready(function(){
     $("#songAlbum").attr("placeholder", data.album);
     $("#songGenre").attr("placeholder", data.genre);
 
-    $('#view-addMusic').addClass("visible");
-    $('#view-addMusic').removeClass("hidden");
+    showAddEditForm();
 
     $('#addBtn').addClass("hidden");
     $('#addBtn').removeClass("visible");
@@ -123,7 +123,6 @@ $(document).ready(function(){
   function clearArray() {
     songsArray = [];
   };
-
 
   // ---------- Get song data from Firebase storage ---------- //
   function getAllSongDataFromFirebase() {
@@ -145,7 +144,6 @@ $(document).ready(function(){
   function onLoadFailure(){
     alert("Well, that didn't work.");
   }
-
 
 // --------------------  Converts the JSON data from objects to arrays  -------------- //
 
@@ -198,42 +196,17 @@ $(document).ready(function(){
 
     $(myId).html(myString);
 
-    // ----- Adds event listeners to the 'Delete'/'More' buttons after they're in the DOM ----- //
-    addListenersToDeleteButtons();
-    addListenersToEditButtons();
+    $('.del_button').on('click', function() {
+       deleteSong(event);
+    });
+
+    $('.edit_button').on('click', function() {
+      editSong(event);
+    });
 
   };
 
-  // ------- Dynamically adds event listeners to all the delete buttons --------------- //
-
-  var addListenersToDeleteButtons = function() {
-
-    let deleteButtonListener = document.getElementsByClassName("del_button");
-
-    for (let i = 0; i < deleteButtonListener.length; i++) {
-
-      let deleteButton = deleteButtonListener[i];
-
-       deleteButton.addEventListener("click", deleteSong);
-     };
-  };
-
-  // ------- Dynamically add event listeners to all the edit buttons --------------- //
-
-  var addListenersToEditButtons = function() {
-
-    let editButtonListener = document.getElementsByClassName("edit_button");
-
-    for (let i = 0; i < editButtonListener.length; i++) {
-
-      let editButton = editButtonListener[i];
-
-       editButton.addEventListener("click", editSong);
-     };
-  };
-
-
-// ------- Function that deletes selected message from DOM and master songs array --------- //
+// ------- Deletes selected message from DOM and master songs array --------- //
 
   var deleteSong = function(event) {
 
@@ -273,7 +246,6 @@ $(document).ready(function(){
       });
   };
 
-
 // ----------- Remove selected song from Firebase storage ----------- //
 
   function removeDataFromFirebase(songId) {
@@ -282,7 +254,6 @@ $(document).ready(function(){
         url:"https://kmrmusichistory.firebaseio.com/songs/" + songId + ".json",
         type: "DELETE"
       });
-
   };
 
   // ---------- Capture values from user "add songs" input  ---------------------- //
@@ -294,29 +265,10 @@ $(document).ready(function(){
     let editedAlbum;
     let editedGenre;
 
-    if($("#songTitle").val() !== "") {
-      editedTitle = $("#songTitle").val();
-    } else {
-      editedTitle = $("#songTitle").attr("placeholder");
-    };
-
-    if($("#songArtist").val() !== "") {
-      editedArtist = $("#songArtist").val();
-    } else {
-      editedArtist = $("#songArtist").attr("placeholder");
-    };
-
-    if($("#songAlbum").val() !== "") {
-      editedAlbum = $("#songAlbum").val();
-    } else {
-      editedAlbum = $("#songAlbum").attr("placeholder");
-    };
-
-    if($("#songGenre").val() !== "") {
-      editedGenre = $("#songGenre").val();
-    } else {
-      editedGenre = $("#songGenre").attr("placeholder");
-    };
+    editedTitle  = (($("#songTitle").val() !== "") ? $("#songTitle").val() : $("#songTitle").attr("placeholder"));
+    editedArtist = (($("#songArtist").val() !== "") ? $("#songArtist").val() : $("#songArtist").attr("placeholder"));
+    editedAlbum  = (($("#songAlbum").val() !== "") ? $("#songAlbum").val() : $("#songAlbum").attr("placeholder"));
+    editedGenre  = (($("#songGenre").val() !== "") ? $("#songGenre").val() : $("#songGenre").attr("placeholder"));
 
     var editedSongData = {
     "title": editedTitle,
@@ -339,13 +291,10 @@ $(document).ready(function(){
       }).done(function() {
 
         getAllSongDataFromFirebase();
+        showSongList();
 
-       $("#view-listMusic").addClass("visible");
-       $("#view-listMusic").removeClass("hidden");
       });
-
   };
-
 
 // ----------- Send user-added song data to Firebase storage ---------- //
 
@@ -356,6 +305,5 @@ $(document).ready(function(){
         data: JSON.stringify(newSong)
       }).done(function() {});
   };
-
 
 });
