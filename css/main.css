@@ -115,7 +115,8 @@ li:last-of-type {
   position: relative;
   left: 35%; }
 
-.del_button {
+.del_button,
+.edit_button {
   border-radius: 5px;
   background-color: lightgrey;
   float: right;

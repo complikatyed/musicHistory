@@ -88,7 +88,8 @@ li:last-of-type {
 }
 
 
-.del_button {
+.del_button,
+.edit_button {
   border-radius: 5px;
   background-color: $button-color;
   float: right;
