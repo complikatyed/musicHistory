@@ -1,9 +1,9 @@
 'use strict';
 
-$(document).ready(function(){
-
  let songsArray = [];
- let songId;
+ let editId = "";
+
+$(document).ready(function(){
 
  getAllSongDataFromFirebase();
 
@@ -55,11 +55,13 @@ $(document).ready(function(){
   });
   // -------------------- Event listener for the "Add" button ------------------ //
 
-  $("#editBtn").click(function(songId) {
+  $("#editBtn").click(function() {
 
-    let editedSong = getEditedSongData();
+    let editedSong = getEditedSongData(editId);
 
-    sendEditedSongToFirebase(editedSong, songId);
+    console.log("in editBtnClickFunction:", editId);
+
+    sendEditedSongToFirebase(editedSong, editId);
 
     $('#view-addMusic').addClass("hidden");
     $('#view-addMusic').removeClass("visible");
@@ -98,7 +100,7 @@ $(document).ready(function(){
 
   // ----- Fill 'Edit Songs' w placeholder data of existing song  ---------- //
 
-  var fillEditPlaceholders = function(data) {
+  var fillEditPlaceholders = function(data, songId) {
 
     $("#view-listMusic").addClass("hidden");
 
@@ -115,6 +117,8 @@ $(document).ready(function(){
     $('#editBtn').addClass("visible");
     $('#editBtn').removeClass("hidden");
 
+    console.log("in fillEditPlaceholders:", songId);
+    editId = songId;
   };
 
   // ---------- Clear songsArray (to avoid data repeat in DOM) ---------- //
@@ -253,6 +257,8 @@ $(document).ready(function(){
 
     let songId = thisSong.getAttribute('id').split("--")[1];
 
+    console.log("in editSong:", songId);
+
     getEditDataFromFirebase(songId);
 
   };
@@ -266,6 +272,8 @@ $(document).ready(function(){
         url:"https://kmrmusichistory.firebaseio.com/songs/" + songId + ".json",
         type: "GET"
       }).done(function(data) {
+
+        console.log("in getEditDataFromFirebase:", songId);
 
         fillEditPlaceholders(data, songId);
 
@@ -288,7 +296,7 @@ $(document).ready(function(){
 
   // ---------- Capture values from user "add songs" input  ---------------------- //
 
-  var getEditedSongData = function() {
+  var getEditedSongData = function(editId) {
 
     let editedTitle;
     let editedArtist;
@@ -325,20 +333,21 @@ $(document).ready(function(){
     "album": editedAlbum,
     "genre": editedGenre.toLowerCase()
     };
+    console.log("in getEditedSongData:", editId);
 
     return editedSongData;
   };
 
 // ----------- Edit selected song in Firebase storage ----------- //
 
-  function sendEditedSongToFirebase(editedSong, songId) {
+  function sendEditedSongToFirebase(editedSong, editId) {
 
-    console.log("edited song", editedSong);
+    console.log("in sendEditedSongToFirebase:", editId );
 
     $.ajax({
-        url:"https://kmrmusichistory.firebaseio.com/songs/" + songId + ".json",
+        url:"https://kmrmusichistory.firebaseio.com/songs/" + editId + ".json",
         type: "PUT",
-        //data: JSON.stringify(editedSong)
+        data: JSON.stringify(editedSong)
       }).done(function() {});
 
   };
