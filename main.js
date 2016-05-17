@@ -110,6 +110,8 @@ $(document).ready(function(){
 
     showAddEditForm();
 
+    $("#songTitle").focus();
+
     $('#addBtn').addClass("hidden");
     $('#addBtn').removeClass("visible");
     $('#editBtn').addClass("visible");
