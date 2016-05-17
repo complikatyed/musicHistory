@@ -256,29 +256,10 @@ $(document).ready(function(){
     let editedAlbum;
     let editedGenre;
 
-    if($("#songTitle").val() !== "") {
-      editedTitle = $("#songTitle").val();
-    } else {
-      editedTitle = $("#songTitle").attr("placeholder");
-    };
-
-    if($("#songArtist").val() !== "") {
-      editedArtist = $("#songArtist").val();
-    } else {
-      editedArtist = $("#songArtist").attr("placeholder");
-    };
-
-    if($("#songAlbum").val() !== "") {
-      editedAlbum = $("#songAlbum").val();
-    } else {
-      editedAlbum = $("#songAlbum").attr("placeholder");
-    };
-
-    if($("#songGenre").val() !== "") {
-      editedGenre = $("#songGenre").val();
-    } else {
-      editedGenre = $("#songGenre").attr("placeholder");
-    };
+    editedTitle  = (($("#songTitle").val() !== "") ? $("#songTitle").val() : $("#songTitle").attr("placeholder"));
+    editedArtist = (($("#songArtist").val() !== "") ? $("#songArtist").val() : $("#songArtist").attr("placeholder"));
+    editedAlbum  = (($("#songAlbum").val() !== "") ? $("#songAlbum").val() : $("#songAlbum").attr("placeholder"));
+    editedGenre  = (($("#songGenre").val() !== "") ? $("#songGenre").val() : $("#songGenre").attr("placeholder"));
 
     var editedSongData = {
     "title": editedTitle,
@@ -315,5 +296,5 @@ $(document).ready(function(){
         data: JSON.stringify(newSong)
       }).done(function() {});
   };
-  
+
 });
