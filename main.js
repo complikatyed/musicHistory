@@ -59,7 +59,7 @@ $(document).ready(function(){
 
     let editedSong = getEditedSongData();
 
-    sendEditedSongToFirebase(editedSong);
+    sendEditedSongToFirebase(editedSong, songId);
 
     $('#view-addMusic').addClass("hidden");
     $('#view-addMusic').removeClass("visible");
@@ -253,8 +253,7 @@ $(document).ready(function(){
 
     let songId = thisSong.getAttribute('id').split("--")[1];
 
-    getEditDataFromFirebase();
-    //fillEditPlaceholders(data);
+    getEditDataFromFirebase(songId);
 
   };
 
@@ -332,7 +331,9 @@ $(document).ready(function(){
 
 // ----------- Edit selected song in Firebase storage ----------- //
 
-  function sendEditedSongToFirebase(editedSong) {
+  function sendEditedSongToFirebase(editedSong, songId) {
+
+    console.log("edited song", editedSong);
 
     $.ajax({
         url:"https://kmrmusichistory.firebaseio.com/songs/" + songId + ".json",
