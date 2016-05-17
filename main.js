@@ -25,7 +25,12 @@ $(document).ready(function(){
 
   $("#link-addMusic").click(function() {
 
+    clearInputs();
     showAddEditForm();
+    $('#addBtn').addClass("visible");
+    $('#addBtn').removeClass("hidden");
+    $('#editBtn').addClass("hidden");
+    $('#editBtn').removeClass("visible");
 
   });
 
@@ -83,16 +88,18 @@ $(document).ready(function(){
 
   var clearInputs = function() {
 
-    $("#songTitle").value = "";
-    $("#songArtist").value = "";
-    $("#songAlbum").value = "";
-    $("#songGenre").value = "";
+    $("#songTitle").attr("placeholder", "").val("");
+    $("#songArtist").attr("placeholder", "").val("");
+    $("#songAlbum").attr("placeholder", "").val("");
+    $("#songGenre").attr("placeholder", "").val("");
 
   };
 
   // ----- Fill 'Edit Songs' w placeholder data of existing song  ---------- //
 
   var fillEditPlaceholders = function(data, songId) {
+
+    clearInputs();
 
     $("#view-listMusic").addClass("hidden");
 
@@ -103,8 +110,10 @@ $(document).ready(function(){
 
     showAddEditForm();
 
-    $('#addBtn').toggle();
-    $('#editBtn').toggle();
+    $('#addBtn').addClass("hidden");
+    $('#addBtn').removeClass("visible");
+    $('#editBtn').addClass("visible");
+    $('#editBtn').removeClass("hidden");
 
     editId = songId;
   };
