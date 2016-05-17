@@ -81,18 +81,16 @@ $(document).ready(function(){
 
   // ----- Fill 'Edit Songs' w placeholder data of existing song  ---------- //
 
-  var fillEditPlaceholders = function(songId) {
+  var fillEditPlaceholders = function(data) {
 
     $("#view-listMusic").addClass("hidden");
 
-    getEditDataFromFirebase(songId);
+    $("#songTitle").attr("placeholder", data.title);
 
-    $("#songTitle").attr("placeholder", songId.title);
-    console.log(songId);
-    //$("#songTitle").default = songId.title;
-    $("#songArtist").value = songId.artist;
-    $("#songAlbum").value = songId.album;
-    $("#songGenre").value = songId.genre;
+
+    $("#songArtist").attr("placeholder", data.artist);
+    $("#songAlbum").attr("placeholder", data.album);
+    $("#songGenre").attr("placeholder", data.genre);
 
     $('#view-addMusic').addClass("visible");
     $('#view-addMusic').removeClass("hidden");
@@ -226,11 +224,8 @@ $(document).ready(function(){
     let songId = thisSong.getAttribute('id').split("--")[1];
 
     $( thisSong ).empty();
-
     songsArray.splice(songId, 1);
-
     removeDataFromFirebase(songId);
-
   };
 
 // ------- Function that deletes selected message from DOM and master songs array --------- //
@@ -241,12 +236,8 @@ $(document).ready(function(){
 
     let songId = thisSong.getAttribute('id').split("--")[1];
 
-    // call the form view again
-    console.log("This id:", songId);
-    // populate the form values with the current song info
-    //fillEditPlaceholders(data);
-    // Allow edit
 
+    getEditDataFromFirebase(songId)
 
   };
 
@@ -259,7 +250,9 @@ $(document).ready(function(){
         url:"https://kmrmusichistory.firebaseio.com/songs/" + songId + ".json",
         type: "GET"
       }).done(function(data) {
-        console.log(data);
+
+        fillEditPlaceholders(data);
+
       });
 
   };
