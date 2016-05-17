@@ -4,7 +4,7 @@ $(document).ready(function(){
 
  let songsArray = [];
 
- getDataFromFirebase();
+ getAllSongDataFromFirebase();
 
 
   // -------------------- Event listeners for the 'Add Music' button ------------------ //
@@ -28,7 +28,7 @@ $(document).ready(function(){
     $("#view-listMusic").addClass("visible");
     $("#view-listMusic").removeClass("hidden");
 
-    getDataFromFirebase();
+    getAllSongDataFromFirebase();
 
   });
 
@@ -37,7 +37,7 @@ $(document).ready(function(){
 
   $("#addBtn").click(function() {
 
-    let newSong = getSongs();
+    let newSong = getNewSongData();
 
     sendNewDataToFirebase(newSong);
 
@@ -46,7 +46,7 @@ $(document).ready(function(){
     $('#view-addMusic').addClass("hidden");
     $('#view-addMusic').removeClass("visible");
 
-    getDataFromFirebase();
+    getAllSongDataFromFirebase();
 
     $("#view-listMusic").addClass("visible");
     $("#view-listMusic").removeClass("hidden");
@@ -56,7 +56,7 @@ $(document).ready(function(){
 
   // ---------- Capture values from user "add songs" input  ---------------------- //
 
-  var getSongs = function() {
+  var getNewSongData = function() {
 
     var newSong = {
     "title": $("#songTitle").val(),
@@ -79,6 +79,28 @@ $(document).ready(function(){
 
   };
 
+  // ----- Fill 'Edit Songs' w placeholder data of existing song  ---------- //
+
+  var fillEditPlaceholders = function(songId) {
+
+    $("#view-listMusic").addClass("hidden");
+
+    getEditDataFromFirebase(songId);
+
+    $("#songTitle").attr("placeholder", songId.title);
+    console.log(songId);
+    //$("#songTitle").default = songId.title;
+    $("#songArtist").value = songId.artist;
+    $("#songAlbum").value = songId.album;
+    $("#songGenre").value = songId.genre;
+
+    $('#view-addMusic').addClass("visible");
+    $('#view-addMusic').removeClass("hidden");
+
+  };
+
+
+
   // ---------- Clear songsArray (to avoid data repeat in DOM) ---------- //
 
   function clearArray() {
@@ -87,7 +109,7 @@ $(document).ready(function(){
 
 
   // ---------- Get song data from Firebase storage ---------- //
-  function getDataFromFirebase() {
+  function getAllSongDataFromFirebase() {
 
     clearArray();
 
@@ -144,6 +166,7 @@ $(document).ready(function(){
        mySongs += "<li>" + songsArray[i][1] + "</li>";   // Artist name
        mySongs += "<li>" + songsArray[i][2] + "</li>";   // Album name
        mySongs += "<li>" + songsArray[i][3] + "</li>";   // Song genre
+       mySongs += "<li> <button id='btn--" + i + "' class='edit_button'>Edit</button>";
        mySongs += "<li> <button id='btn--" + i + "' class='del_button'>Delete</button>";
        mySongs += "</ul></section>";
       }
@@ -160,6 +183,7 @@ $(document).ready(function(){
 
     // ----- Adds event listeners to the 'Delete'/'More' buttons after they're in the DOM ----- //
     addListenersToDeleteButtons();
+    addListenersToEditButtons();
 
   };
 
@@ -177,6 +201,22 @@ $(document).ready(function(){
      };
   };
 
+  // ------- Dynamically add event listeners to all the edit buttons --------------- //
+
+  var addListenersToEditButtons = function() {
+
+    let editButtonListener = document.getElementsByClassName("edit_button");
+
+    for (let i = 0; i < editButtonListener.length; i++) {
+
+      let editButton = editButtonListener[i];
+
+       editButton.addEventListener("click", editSong);
+     };
+  };
+
+
+
 // ------- Function that deletes selected message from DOM and master songs array --------- //
 
   var deleteSong = function(event) {
@@ -193,6 +233,38 @@ $(document).ready(function(){
 
   };
 
+// ------- Function that deletes selected message from DOM and master songs array --------- //
+
+  var editSong = function(event) {
+
+    let thisSong = event.target.closest("section");
+
+    let songId = thisSong.getAttribute('id').split("--")[1];
+
+    // call the form view again
+    console.log("This id:", songId);
+    // populate the form values with the current song info
+    //fillEditPlaceholders(data);
+    // Allow edit
+
+
+  };
+
+
+// ----------- Get selected song from Firebase storage (prep for Edit) ----------- //
+
+  function getEditDataFromFirebase(songId) {
+
+    $.ajax({
+        url:"https://kmrmusichistory.firebaseio.com/songs/" + songId + ".json",
+        type: "GET"
+      }).done(function(data) {
+        console.log(data);
+      });
+
+  };
+
+
 
 // ----------- Remove selected song from Firebase storage ----------- //
 
@@ -204,6 +276,18 @@ $(document).ready(function(){
       });
 
   };
+
+// ----------- Edit selected song in Firebase storage ----------- //
+
+  function editDataInFirebase(songId) {
+
+    $.ajax({
+        url:"https://kmrmusichistory.firebaseio.com/songs/" + songId + ".json",
+        type: "PUT"
+      });
+
+  };
+
 
 // ----------- Send user-added song data to Firebase storage ---------- //
 
