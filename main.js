@@ -3,6 +3,19 @@
  let songsArray = [];
  let editId = "";
 
+function showAddEditForm() {
+  $("#view-listMusic").addClass("hidden");
+  $('#view-addMusic').addClass("visible");
+  $('#view-addMusic').removeClass("hidden");
+}
+
+function showSongList() {
+  $('#view-addMusic').addClass("hidden");
+  $("#view-listMusic").addClass("visible");
+  $("#view-listMusic").removeClass("hidden");
+}
+
+
 $(document).ready(function(){
 
  getAllSongDataFromFirebase();
@@ -11,10 +24,8 @@ $(document).ready(function(){
   // -------------------- Event listeners for the 'Add Music' button ------------------ //
 
   $("#link-addMusic").click(function() {
-    $("#view-listMusic").addClass("hidden");
 
-    $('#view-addMusic').addClass("visible");
-    $('#view-addMusic').removeClass("hidden");
+    showAddEditForm();
 
   });
 
@@ -23,12 +34,7 @@ $(document).ready(function(){
   $("#link-listMusic").click(function(event) {
 
     event.preventDefault();
-
-    $('#view-addMusic').addClass("hidden");
-
-    $("#view-listMusic").addClass("visible");
-    $("#view-listMusic").removeClass("hidden");
-
+    showSongList();
     getAllSongDataFromFirebase();
 
   });
@@ -41,19 +47,12 @@ $(document).ready(function(){
     let newSong = getNewSongData();
 
     sendNewDataToFirebase(newSong);
-
-    clearInputs();
-
-    $('#view-addMusic').addClass("hidden");
-    $('#view-addMusic').removeClass("visible");
-
     getAllSongDataFromFirebase();
-
-    $("#view-listMusic").addClass("visible");
-    $("#view-listMusic").removeClass("hidden");
+    showSongList();
 
   });
-  // -------------------- Event listener for the "Add" button ------------------ //
+
+  // ---------- Event listener for the "Edit" button ---------- //
 
   $("#editBtn").click(function() {
 
@@ -61,12 +60,7 @@ $(document).ready(function(){
 
     sendEditedSongToFirebase(editedSong, editId);
 
-    $('#view-addMusic').addClass("hidden");
-    $('#view-addMusic').removeClass("visible");
-
-    $("#view-listMusic").addClass("visible");
-    $("#view-listMusic").removeClass("hidden");
-
+    showSongList();
 
   });
 
@@ -107,13 +101,10 @@ $(document).ready(function(){
     $("#songAlbum").attr("placeholder", data.album);
     $("#songGenre").attr("placeholder", data.genre);
 
-    $('#view-addMusic').addClass("visible");
-    $('#view-addMusic').removeClass("hidden");
+    showAddEditForm();
 
-    $('#addBtn').addClass("hidden");
-    $('#addBtn').removeClass("visible");
-    $('#editBtn').addClass("visible");
-    $('#editBtn').removeClass("hidden");
+    $('#addBtn').toggle();
+    $('#editBtn').toggle();
 
     editId = songId;
   };
@@ -123,7 +114,6 @@ $(document).ready(function(){
   function clearArray() {
     songsArray = [];
   };
-
 
   // ---------- Get song data from Firebase storage ---------- //
   function getAllSongDataFromFirebase() {
@@ -145,7 +135,6 @@ $(document).ready(function(){
   function onLoadFailure(){
     alert("Well, that didn't work.");
   }
-
 
 // --------------------  Converts the JSON data from objects to arrays  -------------- //
 
@@ -340,8 +329,9 @@ $(document).ready(function(){
 
         getAllSongDataFromFirebase();
 
-       $("#view-listMusic").addClass("visible");
-       $("#view-listMusic").removeClass("hidden");
+        showSongList();
+       //$("#view-listMusic").addClass("visible");
+       //$("#view-listMusic").removeClass("hidden");
       });
 
   };
