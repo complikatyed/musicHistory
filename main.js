@@ -6,148 +6,9 @@
 
 $(document).ready(function(){
 
+// ****************************  'List Songs' FUNCTIONS  ****************************** //
+
  getAllSongDataFromFirebase();
-
-// ---------- Display separate sections for songs, adding, and editing ---------- //
-  function showAddForm() {
-    $("#view-editMusic").addClass("hidden");
-    $("#view-listMusic").addClass("hidden");
-    $('#view-addMusic').addClass("visible");
-    $('#view-addMusic').removeClass("hidden");
-  }
-
-  function showEditForm() {
-    $("#view-addMusic").addClass("hidden");
-    $("#view-listMusic").addClass("hidden");
-    $('#view-editMusic').addClass("visible");
-    $('#view-editMusic').removeClass("hidden");
-  }
-
-  function showSongList() {
-    $("#view-editMusic").addClass("hidden");
-    $('#view-addMusic').addClass("hidden");
-    $("#view-listMusic").addClass("visible");
-    $("#view-listMusic").removeClass("hidden");
-  }
-
-  // -------------------- Event listeners for the 'Add Music' button ------------------ //
-
-  $("#link-addMusic").click(function() {
-
-    clearInputs();
-    showAddForm();
-
-  });
-
-  // -------------------- Event listener for the "List Music" button -------------------------- //
-
-  $("#link-listMusic").click(function(event) {
-
-    event.preventDefault();
-    showSongList();
-    getAllSongDataFromFirebase();
-
-  });
-
-
-  // -------------------- Actions for "enter" during EDIT ------------------ //
-
-    $('#view-editMusic').keypress(function(e) {
-      if(e.which == 13) {
-
-      event.preventDefault();
-
-        let editedSong = getEditedSongData(editId);
-
-        sendEditedSongToFirebase(editedSong, editId);
-        showSongList();
-      }
-    });
-
-    $('#view-addMusic').keypress(function(e) {
-      if(e.which == 13) {
-
-      }
-    });
-
-  // -------------------- Event listener for the "Add" button ------------------ //
-
-  $("#addBtn").click(function() {
-
-    let newSong = getNewSongData();
-
-    sendNewDataToFirebase(newSong);
-    getAllSongDataFromFirebase();
-    showSongList();
-
-  });
-
-
-  // ---------- Event listener for the "Edit" button ---------- //
-
-  $("#editBtn").click(function() {
-
-    let editedSong = getEditedSongData(editId);
-
-    sendEditedSongToFirebase(editedSong, editId);
-    showSongList();
-
-  });
-
-  // ---------- Capture values from user "add songs" input  ---------------------- //
-
-  var getNewSongData = function() {
-
-    var newSong = {
-    "title": $("#songTitle").val(),
-    "artist": $("#songArtist").val(),
-    "album": $("#songAlbum").val(),
-    "genre": $("#songGenre").val().toLowerCase()
-    };
-
-    return newSong;
-
-  };
-
-  // ---------- Clear 'Add Songs' input boxes ---------- //
-
-  var clearInputs = function() {
-
-    $("#songTitle").attr("placeholder", "").val("");
-    $("#songArtist").attr("placeholder", "").val("");
-    $("#songAlbum").attr("placeholder", "").val("");
-    $("#songGenre").attr("placeholder", "").val("");
-
-  };
-
-  // ----- Fill 'Edit Songs' w placeholder data of existing song  ---------- //
-
-  var fillEditPlaceholders = function(data, songId) {
-
-    clearInputs();
-
-    $("#view-listMusic").addClass("hidden");
-
-    $("#editedSongTitle").attr("placeholder", data.title);
-    $("#editedSongArtist").attr("placeholder", data.artist);
-    $("#editedSongAlbum").attr("placeholder", data.album);
-    $("#editedSongGenre").attr("placeholder", data.genre);
-
-    showEditForm();
-
-    $("#songTitle").focus();
-
-
-    editId = songId;
-  };
-
-  // ---------- Clear songsArray (to avoid data repeat in DOM) ---------- //
-
-  function clearArray() {
-    songsArray = [];
-  };
-
-  // ---------- Get song data from Firebase storage ---------- //
 
   function getAllSongDataFromFirebase() {
 
@@ -157,27 +18,34 @@ $(document).ready(function(){
       url:"https://kmrmusichistory.firebaseio.com/songs/.json",
       success: onLoadSuccess
     });
+  };
+
+  // ---------- Display 'songchart' and hide other page sections ---------- //
+
+  function showSongList() {
+    $("#view-editMusic").addClass("hidden");
+    $('#view-addMusic').addClass("hidden");
+    $("#view-listMusic").addClass("visible");
+    $("#view-listMusic").removeClass("hidden");
   }
 
-  // -------------------- XHR success and failure functions ------------------------------- //
+  // ---------- Listener for the 'List Music' button ---------- //
 
-  function onLoadSuccess(data){
-    gatherStoredSongData(data);
-  }
+  $("#link-listMusic").click(function(event) {
 
-  function onLoadFailure(){
-    alert("Well, that didn't work.");
-  }
+    event.preventDefault();
+    showSongList();
+    getAllSongDataFromFirebase();
 
-// --------------------  Converts the JSON data from objects to arrays  -------------- //
+  });
 
-  var gatherStoredSongData = function(songs) {
+  // ---------- Converts Firebase JSON data from objects to arrays ---------- //
+
+  function gatherStoredSongData(songs) {
 
     for (let song in songs) {
 
       let storedSong = [];
-
-      // ----- Pushes each piece of the song data into a new 'storedSong' array ----- //
 
       storedSong.push(songs[song].title);
       storedSong.push(songs[song].artist);
@@ -185,16 +53,15 @@ $(document).ready(function(){
       storedSong.push(songs[song].genre);
       storedSong.push(song);
 
-      // ----- Pushes each the new individual song array into the master song array ------ //
       songsArray.push(storedSong);
     };
 
     buildSongCardsFromObject();
   };
 
-// -------------------- Builds "ourSongs" string based on the songsArray -------------------- //
+  // ---------- Builds 'mySongs' string based on the songsArray ---------- //
 
-  var buildSongCardsFromObject = function() {
+  function buildSongCardsFromObject() {
 
     let mySongs = "";
 
@@ -210,13 +77,12 @@ $(document).ready(function(){
        mySongs += "</ul></section>";
       }
 
-      // ----- Calls the 'showSongs' function that sends the song string to the DOM ------ //
       showSongs(mySongs, "#songchart");
   };
 
-// -------------------- Function that adds songs to the DOM -------------------------- //
+  // ---------- Adds song sections to the DOM ---------- //
 
-  var showSongs = function(myString, myId) {
+  function showSongs(myString, myId) {
 
     $(myId).html(myString);
 
@@ -230,22 +96,88 @@ $(document).ready(function(){
 
   };
 
-// ------- Deletes selected message from DOM and master songs array --------- //
+  // ---------- Clear songsArray (to avoid data repeat in DOM) ---------- //
 
-  var deleteSong = function(event) {
-
-    let thisSong = event.target.closest("section");
-
-    let songId = thisSong.getAttribute('id').split("--")[1];
-
-    $( thisSong ).empty();
-    songsArray.splice(songId, 1);
-    removeDataFromFirebase(songId);
+  function clearArray() {
+    songsArray = [];
   };
 
-// ------- Function that deletes selected message from DOM and master songs array --------- //
+// ****************************  'ADD' FUNCTIONS  ****************************** //
 
-  var editSong = function(event) {
+  // ---------- Display add form and hide other page sections ---------- //
+
+  function showAddForm() {
+    $("#view-editMusic").addClass("hidden");
+    $("#view-listMusic").addClass("hidden");
+    $('#view-addMusic').addClass("visible");
+    $('#view-addMusic').removeClass("hidden");
+  }
+
+  // ---------- Listener for the 'Add Music' button ---------- //
+
+  $("#link-addMusic").click(function() {
+    clearInputs();
+    showAddForm();
+  });
+
+  // ---------- Capture values from user 'add songs' input ---------- //
+
+  function getNewSongData() {
+
+    var newSong = {
+    "title": $("#songTitle").val(),
+    "artist": $("#songArtist").val(),
+    "album": $("#songAlbum").val(),
+    "genre": $("#songGenre").val().toLowerCase()
+    };
+
+    return newSong;
+  };
+
+  // ---------- 'Enter' keypress during Add ---------- //
+
+  $('#view-addMusic').keypress(function(e) {
+    if(e.which == 13) {}
+  });
+
+  // ---------- Listener for the 'Add' button ---------- //
+
+  $("#addBtn").click(function() {
+
+    let newSong = getNewSongData();
+
+    sendNewDataToFirebase(newSong);
+    getAllSongDataFromFirebase();
+    showSongList();
+
+  });
+
+  // ---------- Send new song information to Firebase ---------- //
+
+  function sendNewDataToFirebase(newSong) {
+    $.ajax({
+        url:"https://kmrmusichistory.firebaseio.com/songs/.json",
+        type: "POST",
+        data: JSON.stringify(newSong)
+      }).done(function() {});
+  };
+
+  // ---------- Clear inputs from add form ---------- //
+
+  function clearInputs() {
+
+    $("#songTitle").attr("placeholder", "").val("");
+    $("#songArtist").attr("placeholder", "").val("");
+    $("#songAlbum").attr("placeholder", "").val("");
+    $("#songGenre").attr("placeholder", "").val("");
+
+  };
+
+// ****************************  'EDIT' FUNCTIONS  ****************************** //
+
+  // ---------- Grabs relevant song id when 'edit' button is clicked --------- //
+
+  function editSong(event) {
 
     let thisSong = event.target.closest("section");
 
@@ -255,8 +187,7 @@ $(document).ready(function(){
 
   };
 
-
-// ----------- Get selected song from Firebase storage (prep for Edit) ----------- //
+  // ----------- GETs individual song data from Firebase  ----------- //
 
   function getEditDataFromFirebase(songId) {
 
@@ -266,23 +197,66 @@ $(document).ready(function(){
       }).done(function(data) {
 
         fillEditPlaceholders(data, songId);
-
       });
   };
 
-// ----------- Remove selected song from Firebase storage ----------- //
+  // ---------- Fill edit form w placeholders (existing song data) ---------- //
 
-  function removeDataFromFirebase(songId) {
+  function fillEditPlaceholders(data, songId) {
 
-    $.ajax({
-        url:"https://kmrmusichistory.firebaseio.com/songs/" + songId + ".json",
-        type: "DELETE"
-      });
+    clearInputs();
+
+    $("#view-listMusic").addClass("hidden");
+
+    $("#editedSongTitle").attr("placeholder", data.title);
+    $("#editedSongArtist").attr("placeholder", data.artist);
+    $("#editedSongAlbum").attr("placeholder", data.album);
+    $("#editedSongGenre").attr("placeholder", data.genre);
+
+    showEditForm();
+
+    $("#songTitle").focus();
+
+    editId = songId;
   };
 
-  // ---------- Capture values from user "add songs" input  ---------------------- //
+  // ---------- Display edit form and hide other page sections ---------- //
 
-  var getEditedSongData = function(editId) {
+  function showEditForm() {
+    $("#view-addMusic").addClass("hidden");
+    $("#view-listMusic").addClass("hidden");
+    $('#view-editMusic').addClass("visible");
+    $('#view-editMusic').removeClass("hidden");
+  }
+
+  // ---------- Listener for the main edit form button ---------- //
+
+  $("#editBtn").click(function() {
+
+    let editedSong = getEditedSongData(editId);
+
+    sendEditedSongToFirebase(editedSong, editId);
+    showSongList();
+
+  });
+
+  // ---------- Allows user to press "enter" to submit data ---------- //
+
+  $('#view-editMusic').keypress(function(e) {
+    if(e.which == 13) {
+
+    event.preventDefault();
+
+      let editedSong = getEditedSongData(editId);
+
+      sendEditedSongToFirebase(editedSong, editId);
+      showSongList();
+    }
+  });
+
+  // ---------- Captures new (or old) values from edit form input ---------- //
+
+  function getEditedSongData(editId) {
 
     let editedTitle;
     let editedArtist;
@@ -323,9 +297,9 @@ $(document).ready(function(){
     return editedSongData;
   };
 
-// ----------- Edit selected song in Firebase storage ----------- //
+  // ----------- Sends edited data with PUT to Firebase ----------- //
 
-  var sendEditedSongToFirebase = function(editedSong, editId) {
+  function sendEditedSongToFirebase(editedSong, editId) {
 
     $.ajax({
         url:"https://kmrmusichistory.firebaseio.com/songs/" + editId + ".json",
@@ -335,18 +309,42 @@ $(document).ready(function(){
 
         getAllSongDataFromFirebase();
         showSongList();
-
       });
   };
 
-// ----------- Send user-added song data to Firebase storage ---------- //
+// ****************************  'DELETE' FUNCTIONS  ****************************** //
 
-  function sendNewDataToFirebase(newSong) {
-    $.ajax({
-        url:"https://kmrmusichistory.firebaseio.com/songs/.json",
-        type: "POST",
-        data: JSON.stringify(newSong)
-      }).done(function() {});
+  // ---------- Grabs relevant song id in preparation for deleting --------- //
+
+  function deleteSong(event) {
+
+    let thisSong = event.target.closest("section");
+
+    let songId = thisSong.getAttribute('id').split("--")[1];
+
+    $( thisSong ).empty();
+    songsArray.splice(songId, 1);
+    removeDataFromFirebase(songId);
   };
+
+  // ----------- Sends DELETE call to Firebase ----------- //
+
+  function removeDataFromFirebase(songId) {
+
+    $.ajax({
+        url:"https://kmrmusichistory.firebaseio.com/songs/" + songId + ".json",
+        type: "DELETE"
+      });
+  };
+
+// ****************************  XHR/AJAX  ****************************** //
+
+  function onLoadSuccess(data){
+    gatherStoredSongData(data);
+  }
+
+  function onLoadFailure(){
+    alert("Well, that didn't work.");
+  }
 
 });
