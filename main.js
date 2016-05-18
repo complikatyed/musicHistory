@@ -8,13 +8,6 @@ $(document).ready(function(){
 
  getAllSongDataFromFirebase();
 
- var lookForEnterPress = function() {
-  if ( $('#editBtn').hasClass('visible') ) {
-    doEnterEdit();
-  } else {
-    doEnterAdd();
-  }
- };
 
 function showAddForm() {
   $("#view-editMusic").addClass("hidden");
@@ -42,8 +35,7 @@ function showSongList() {
   $("#link-addMusic").click(function() {
 
     clearInputs();
-    showAddEditForm();
-    lookForEnterPress();
+    showAddForm();
 
   });
 
@@ -60,24 +52,23 @@ function showSongList() {
 
   // -------------------- Actions for "enter" during EDIT ------------------ //
 
-  var doEnterAdd = function() {
-
-    $('.addInput').keypress(function(e) {
+    $('#view-editMusic').keypress(function(e) {
       if(e.which == 13) {
-        console.log("You pressed Enter to Add something");
+
+      event.preventDefault();
+
+        let editedSong = getEditedSongData(editId);
+
+        sendEditedSongToFirebase(editedSong, editId);
+        showSongList();
       }
     });
-  };
 
-  var doEnterEdit = function() {
-
-    $('.addInput').keypress(function(e) {
+    $('#view-addMusic').keypress(function(e) {
       if(e.which == 13) {
-        console.log("You pressed Enter to Edit something");
+
       }
     });
-  };
-
 
   // -------------------- Event listener for the "Add" button ------------------ //
 
@@ -146,7 +137,6 @@ function showSongList() {
 
     $("#songTitle").focus();
 
-    lookForEnterPress();
 
     editId = songId;
   };
@@ -158,6 +148,7 @@ function showSongList() {
   };
 
   // ---------- Get song data from Firebase storage ---------- //
+
   function getAllSongDataFromFirebase() {
 
     clearArray();
@@ -334,7 +325,7 @@ function showSongList() {
 
 // ----------- Edit selected song in Firebase storage ----------- //
 
-  function sendEditedSongToFirebase(editedSong, editId) {
+  var sendEditedSongToFirebase = function(editedSong, editId) {
 
     $.ajax({
         url:"https://kmrmusichistory.firebaseio.com/songs/" + editId + ".json",
