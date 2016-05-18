@@ -8,27 +8,27 @@ $(document).ready(function(){
 
  getAllSongDataFromFirebase();
 
+// ---------- Display separate sections for songs, adding, and editing ---------- //
+  function showAddForm() {
+    $("#view-editMusic").addClass("hidden");
+    $("#view-listMusic").addClass("hidden");
+    $('#view-addMusic').addClass("visible");
+    $('#view-addMusic').removeClass("hidden");
+  }
 
-function showAddForm() {
-  $("#view-editMusic").addClass("hidden");
-  $("#view-listMusic").addClass("hidden");
-  $('#view-addMusic').addClass("visible");
-  $('#view-addMusic').removeClass("hidden");
-}
+  function showEditForm() {
+    $("#view-addMusic").addClass("hidden");
+    $("#view-listMusic").addClass("hidden");
+    $('#view-editMusic').addClass("visible");
+    $('#view-editMusic').removeClass("hidden");
+  }
 
-function showEditForm() {
-  $("#view-addMusic").addClass("hidden");
-  $("#view-listMusic").addClass("hidden");
-  $('#view-editMusic').addClass("visible");
-  $('#view-editMusic').removeClass("hidden");
-}
-
-function showSongList() {
-  $("#view-editMusic").addClass("hidden");
-  $('#view-addMusic').addClass("hidden");
-  $("#view-listMusic").addClass("visible");
-  $("#view-listMusic").removeClass("hidden");
-}
+  function showSongList() {
+    $("#view-editMusic").addClass("hidden");
+    $('#view-addMusic').addClass("hidden");
+    $("#view-listMusic").addClass("visible");
+    $("#view-listMusic").removeClass("hidden");
+  }
 
   // -------------------- Event listeners for the 'Add Music' button ------------------ //
 
