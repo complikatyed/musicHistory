@@ -72,20 +72,39 @@
   </section>
 
   <section id="view-addMusic" class="hidden addArea">
-    <label for="songTitle" class="addLabel">Song name:</label>
-    <input type="text" id="songTitle" name="songname" class="addInput setwidth">
-    <br>
-    <label for="songArtist" class="addLabel2">Artist:</label>
-    <input type="text" id="songArtist" name="songArtist" class="addInput setwidth">
-    <br>
-    <label for="songAlbum" class="addLabel3">Album:</label>
-    <input type="text" id="songAlbum" name="songAlbum" class="addInput setwidth">
-    <br>
-    <label for="songGenre" class="addLabel3">Genre:</label>
-    <input type="text" id="songGenre" name="songGenre" class="addInput setwidth">
-    <br>
-    <button id="addBtn" class="grey_button2">Add</button>
-    <button id="editBtn" class="grey_button2 hidden">Edit</button>
+    <form id="addSongs">
+      <label for="songTitle" class="addLabel">Song name:</label>
+      <input type="text" id="songTitle" name="songname" class="addInput setwidth">
+      <br>
+      <label for="songArtist" class="addLabel2">Artist:</label>
+      <input type="text" id="songArtist" name="songArtist" class="addInput setwidth">
+      <br>
+      <label for="songAlbum" class="addLabel3">Album:</label>
+      <input type="text" id="songAlbum" name="songAlbum" class="addInput setwidth">
+      <br>
+      <label for="songGenre" class="addLabel3">Genre:</label>
+      <input type="text" id="songGenre" name="songGenre" class="addInput setwidth">
+      <br>
+      <button id="addBtn" class="grey_button2">Add</button>
+    </form>
+  </section>
+
+  <section id="view-editMusic" class="hidden editArea">
+    <form id="editSongs">
+      <label for="songTitle" class="addLabel">Song name:</label>
+      <input type="text" id="editedSongTitle" name="songname" class="addInput setwidth">
+      <br>
+      <label for="songArtist" class="addLabel2">Artist:</label>
+      <input type="text" id="editedSongArtist" name="songArtist" class="addInput setwidth">
+      <br>
+      <label for="songAlbum" class="addLabel3">Album:</label>
+      <input type="text" id="editedSongAlbum" name="songAlbum" class="addInput setwidth">
+      <br>
+      <label for="songGenre" class="addLabel3">Genre:</label>
+      <input type="text" id="editedSongGenre" name="songGenre" class="addInput setwidth">
+      <br>
+      <button id="editBtn" class="grey_button2">Edit</button>
+    </form>
   </section>
   <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
   <script type="text/javascript" src="main.js"></script>
