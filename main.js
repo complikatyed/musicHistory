@@ -3,23 +3,39 @@
  let songsArray = [];
  let editId = "";
 
-function showAddEditForm() {
-  $("#view-listMusic").addClass("hidden");
-  $('#view-addMusic').addClass("visible");
-  $('#view-addMusic').removeClass("hidden");
-}
-
-function showSongList() {
-  $('#view-addMusic').addClass("hidden");
-  $("#view-listMusic").addClass("visible");
-  $("#view-listMusic").removeClass("hidden");
-}
-
 
 $(document).ready(function(){
 
  getAllSongDataFromFirebase();
 
+ var lookForEnterPress = function() {
+  if ( $('#editBtn').hasClass('visible') ) {
+    doEnterEdit();
+  } else {
+    doEnterAdd();
+  }
+ };
+
+function showAddForm() {
+  $("#view-editMusic").addClass("hidden");
+  $("#view-listMusic").addClass("hidden");
+  $('#view-addMusic').addClass("visible");
+  $('#view-addMusic').removeClass("hidden");
+}
+
+function showEditForm() {
+  $("#view-addMusic").addClass("hidden");
+  $("#view-listMusic").addClass("hidden");
+  $('#view-editMusic').addClass("visible");
+  $('#view-editMusic').removeClass("hidden");
+}
+
+function showSongList() {
+  $("#view-editMusic").addClass("hidden");
+  $('#view-addMusic').addClass("hidden");
+  $("#view-listMusic").addClass("visible");
+  $("#view-listMusic").removeClass("hidden");
+}
 
   // -------------------- Event listeners for the 'Add Music' button ------------------ //
 
@@ -27,10 +43,7 @@ $(document).ready(function(){
 
     clearInputs();
     showAddEditForm();
-    $('#addBtn').addClass("visible");
-    $('#addBtn').removeClass("hidden");
-    $('#editBtn').addClass("hidden");
-    $('#editBtn').removeClass("visible");
+    lookForEnterPress();
 
   });
 
@@ -45,6 +58,27 @@ $(document).ready(function(){
   });
 
 
+  // -------------------- Actions for "enter" during EDIT ------------------ //
+
+  var doEnterAdd = function() {
+
+    $('.addInput').keypress(function(e) {
+      if(e.which == 13) {
+        console.log("You pressed Enter to Add something");
+      }
+    });
+  };
+
+  var doEnterEdit = function() {
+
+    $('.addInput').keypress(function(e) {
+      if(e.which == 13) {
+        console.log("You pressed Enter to Edit something");
+      }
+    });
+  };
+
+
   // -------------------- Event listener for the "Add" button ------------------ //
 
   $("#addBtn").click(function() {
@@ -57,6 +91,7 @@ $(document).ready(function(){
 
   });
 
+
   // ---------- Event listener for the "Edit" button ---------- //
 
   $("#editBtn").click(function() {
@@ -64,7 +99,6 @@ $(document).ready(function(){
     let editedSong = getEditedSongData(editId);
 
     sendEditedSongToFirebase(editedSong, editId);
-
     showSongList();
 
   });
@@ -103,19 +137,16 @@ $(document).ready(function(){
 
     $("#view-listMusic").addClass("hidden");
 
-    $("#songTitle").attr("placeholder", data.title);
-    $("#songArtist").attr("placeholder", data.artist);
-    $("#songAlbum").attr("placeholder", data.album);
-    $("#songGenre").attr("placeholder", data.genre);
+    $("#editedSongTitle").attr("placeholder", data.title);
+    $("#editedSongArtist").attr("placeholder", data.artist);
+    $("#editedSongAlbum").attr("placeholder", data.album);
+    $("#editedSongGenre").attr("placeholder", data.genre);
 
-    showAddEditForm();
+    showEditForm();
 
     $("#songTitle").focus();
 
-    $('#addBtn').addClass("hidden");
-    $('#addBtn').removeClass("visible");
-    $('#editBtn').addClass("visible");
-    $('#editBtn').removeClass("hidden");
+    lookForEnterPress();
 
     editId = songId;
   };
@@ -267,10 +298,29 @@ $(document).ready(function(){
     let editedAlbum;
     let editedGenre;
 
-    editedTitle  = (($("#songTitle").val() !== "") ? $("#songTitle").val() : $("#songTitle").attr("placeholder"));
-    editedArtist = (($("#songArtist").val() !== "") ? $("#songArtist").val() : $("#songArtist").attr("placeholder"));
-    editedAlbum  = (($("#songAlbum").val() !== "") ? $("#songAlbum").val() : $("#songAlbum").attr("placeholder"));
-    editedGenre  = (($("#songGenre").val() !== "") ? $("#songGenre").val() : $("#songGenre").attr("placeholder"));
+    if ($("#editedSongTitle").val() !== "") {
+      editedTitle = $("#editedSongTitle").val();
+    } else {
+      editedTitle = $("#editedSongTitle").attr("placeholder");
+    }
+
+    if ($("#editedSongArtist").val() !== "") {
+      editedArtist = $("#editedSongArtist").val();
+    } else {
+      editedArtist = $("#editedSongArtist").attr("placeholder");
+    }
+
+    if ($("#editedSongAlbum").val() !== "") {
+      editedAlbum = $("#editedSongAlbum").val();
+    } else {
+      editedAlbum = $("#editedSongAlbum").attr("placeholder");
+    }
+
+    if ($("#editedSongGenre").val() !== "") {
+      editedGenre = $("#editedSongGenre").val();
+    } else {
+      editedGenre = $("#editedSongGenre").attr("placeholder");
+    }
 
     var editedSongData = {
     "title": editedTitle,
